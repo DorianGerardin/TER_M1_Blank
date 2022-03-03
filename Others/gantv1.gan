@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="TER Blank" company="" webLink="http://" view-date="2022-02-07" view-index="0" gantt-divider-location="537" resource-divider-location="300" version="2.8.10" locale="fr">
+    <description/>
+    <view zooming-state="default:5" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="261" order="0"/>
+        <field id="tpd4" name="Date de début" width="136" order="1"/>
+        <field id="tpd5" name="Date de fin" width="136" order="2"/>
+        <option id="color.recent"><![CDATA[#ff99cc #99ff99 #000000 #33ff33 #ff33cc #ff9933 #3333ff]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="210" order="0"/>
+        <field id="1" name="Rôle par défaut" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="true"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="Création du github" color="#8cb6ce" meeting="false" start="2022-02-12" duration="1" complete="0" thirdDate="2022-02-14" thirdDate-constraint="0" priority="2" expand="true"/>
+        <task id="2" name="modélisation du personnage principal" color="#99ff99" meeting="false" start="2022-02-12" duration="9" complete="0" thirdDate="2022-02-14" thirdDate-constraint="0" priority="2" expand="true">
+            <depend id="9" type="2" difference="0" hardness="Strong"/>
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+            <depend id="15" type="2" difference="0" hardness="Strong"/>
+            <depend id="62" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="4" name="modélisation des ennemis" color="#99ff99" meeting="false" start="2022-02-12" duration="9" complete="0" thirdDate="2022-02-04" thirdDate-constraint="0" expand="true">
+            <depend id="9" type="2" difference="0" hardness="Strong"/>
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+            <depend id="15" type="2" difference="0" hardness="Strong"/>
+            <depend id="62" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="7" name="modélisation du sol et du fond" color="#ff99cc" meeting="false" start="2022-02-12" duration="9" complete="0" thirdDate="2022-02-12" thirdDate-constraint="0" expand="true"/>
+        <task id="18" name="Creation Menu" color="#000000" meeting="false" start="2022-02-12" duration="15" complete="0" thirdDate="2022-02-12" thirdDate-constraint="0" expand="true"/>
+        <task id="20" name="Ajout d'une musique de fond" color="#ff99cc" meeting="false" start="2022-02-12" duration="15" complete="0" thirdDate="2022-02-12" thirdDate-constraint="0" expand="true"/>
+        <task id="12" name="Mouvement des ennemis vers nous" color="#ff99cc" meeting="false" start="2022-02-21" duration="10" complete="0" thirdDate="2022-02-12" thirdDate-constraint="0" expand="true"/>
+        <task id="9" name="Animation coup de point(droite/gauche)" color="#99ff99" meeting="false" start="2022-02-21" duration="5" complete="0" thirdDate="2022-02-12" thirdDate-constraint="0" expand="true">
+            <depend id="15" type="2" difference="0" hardness="Strong"/>
+            <depend id="62" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="15" name="Collision ennemi quand on tape" color="#000000" meeting="false" start="2022-02-26" duration="10" complete="0" thirdDate="2022-02-12" thirdDate-constraint="0" expand="true">
+            <depend id="62" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="47" name="Difficulté incrémentale au fil du temps" color="#99ff99" meeting="false" start="2022-03-08" duration="15" complete="0" thirdDate="2022-02-12" thirdDate-constraint="0" expand="true"/>
+        <task id="53" name="Degat de l'ennemi quand est à portée" color="#ff99cc" meeting="false" start="2022-03-08" duration="15" complete="0" thirdDate="2022-02-12" thirdDate-constraint="0" expand="true"/>
+        <task id="56" name="Ajout de particules quand ennemi meurt" color="#000000" meeting="false" start="2022-03-08" duration="5" complete="0" thirdDate="2022-03-08" thirdDate-constraint="0" expand="true"/>
+        <task id="62" name="Effet de 'lag' quand on met un coup" color="#000000" meeting="false" start="2022-03-08" duration="15" complete="0" thirdDate="2022-03-08" thirdDate-constraint="0" expand="true"/>
+        <task id="66" name="Son quand on met un coup à l'ennemi" color="#ff99cc" meeting="false" start="2022-03-08" duration="5" complete="0" thirdDate="2022-03-08" thirdDate-constraint="0" expand="true"/>
+        <task id="69" name="Ajout de plusieurs types d'ennemi" color="#99ff99" meeting="false" start="2022-03-08" duration="15" complete="0" thirdDate="2022-03-08" thirdDate-constraint="0" expand="true"/>
+        <task id="71" name="Multiplicateur de score" color="#99ff99" meeting="false" start="2022-03-13" duration="5" complete="0" thirdDate="2022-03-04" thirdDate-constraint="0" expand="true"/>
+        <task id="73" name="Ajout d'un score" color="#000000" meeting="false" start="2022-03-08" duration="5" complete="0" thirdDate="2022-03-04" thirdDate-constraint="0" expand="true">
+            <depend id="71" type="2" difference="0" hardness="Strong"/>
+            <depend id="78" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="78" name="Tableau de scores" color="#ff99cc" meeting="false" start="2022-03-13" duration="30" complete="0" thirdDate="2022-03-03" thirdDate-constraint="0" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
