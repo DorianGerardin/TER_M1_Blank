@@ -33,6 +33,6 @@ public class Ennemy : MonoBehaviour
     }
 
     public void setSpeed(float s){
-	speed=s;
+	    speed=s;
     }
 }

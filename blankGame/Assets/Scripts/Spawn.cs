@@ -27,8 +27,8 @@ public class Spawn : MonoBehaviour
         if(stopSpawn){
             CancelInvoke("SpawnObject");
         }
-	else{
-		Instantiate(spawnee, transform.position, transform.rotation);
-	}
+        else{
+            Instantiate(spawnee, transform.position, transform.rotation);
+        }
     }
 }

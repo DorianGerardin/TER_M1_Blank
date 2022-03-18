@@ -7,6 +7,8 @@ public class EnnemySpawn : MonoBehaviour
 
     public GameObject spawnee;
     public GameObject target;
+    private Ennemy enemy;
+
     public bool stopSpawn=false;
     public float spawnTime;
     public float spawnDelay;
@@ -15,9 +17,10 @@ public class EnnemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-	spawnee.GetComponent<Ennemy>().setTarget(target);
-	spawnee.GetComponent<Ennemy>().setSpeed(speed);
+        enemy = spawnee.GetComponent<Ennemy>();
         InvokeRepeating("SpawnObject",spawnTime,spawnDelay);
+        enemy.setTarget(target);
+        enemy.setSpeed(speed);
     }
 
     // Update is called once per frame
@@ -37,12 +40,12 @@ public class EnnemySpawn : MonoBehaviour
     }
 
     public void setSpeed(float s){
-	speed=s;    
+	    speed=s;    
     }
 
     public void setDelay(float d){
-   	spawnDelay=d;
-	CancelInvoke("SpawnObject");
-	InvokeRepeating("SpawnObject",1,spawnDelay); 
+        spawnDelay=d;
+        CancelInvoke("SpawnObject");
+        InvokeRepeating("SpawnObject",1,spawnDelay); 
     }
 }
