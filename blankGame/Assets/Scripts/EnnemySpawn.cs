@@ -23,7 +23,7 @@ public class EnnemySpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spawnee.GetComponent<Ennemy>().setSpeed(speed);
+        //spawnee.GetComponent<Ennemy>().setSpeed(speed);
     }
 
     public void SpawnObject(){
@@ -31,9 +31,9 @@ public class EnnemySpawn : MonoBehaviour
         if(stopSpawn){
             CancelInvoke("SpawnObject");
         }
-	else{
-		Instantiate(spawnee, transform.position, transform.rotation);
-	}
+        else{
+            Instantiate(spawnee, transform.position, transform.rotation);
+        }
     }
 
     public void setSpeed(float s){

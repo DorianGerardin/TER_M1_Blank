@@ -682,6 +682,7 @@ GameObject:
   - component: {fileID: 6156645677908684375}
   - component: {fileID: 6463128695719269769}
   - component: {fileID: 6463128695719269878}
+  - component: {fileID: 2820809609434838425}
   m_Layer: 0
   m_Name: EnnemyLeft
   m_TagString: Untagged
@@ -794,6 +795,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2820809609434838425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463128695719269879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2e90347baa11aef8ad2b7b2adc6311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  path: {x: 0, y: 0, z: 0}
+  step: 0
+  speed: 180
 --- !u!1 &6518340350583174828
 GameObject:
   m_ObjectHideFlags: 0
