@@ -7,11 +7,10 @@ public class GameManager : MonoBehaviour
     
     public GameObject spawner1;
     public GameObject spawner2;
-    public GameObject player;
-    public float speed=180.0F;
-    public int timeSpent=0;
-    public int wave=0;
-    public float ratioIncrement=0.9F;
+    public float speed=50f;
+    private int timeSpent=0;
+    private int wave=0;
+    public float ratioIncrement=2.0F;
 
     // Start is called before the first frame update
     void Start()
@@ -26,14 +25,7 @@ public class GameManager : MonoBehaviour
 	if(timeSpent==300){
 	    timeSpent=0;
             wave++;
-	    if(speed>30){
-	    	speed*=ratioIncrement;
-		spawner1.GetComponent<EnnemySpawn>().setSpeed(speed);
-		spawner2.GetComponent<EnnemySpawn>().setSpeed(speed);
-             	spawner1.GetComponent<EnnemySpawn>().setDelay(spawner1.GetComponent<EnnemySpawn>().spawnDelay*ratioIncrement);
-		spawner2.GetComponent<EnnemySpawn>().setDelay(spawner2.GetComponent<EnnemySpawn>().spawnDelay*ratioIncrement);
-			    
-	    }
+	    speed*=ratioIncrement;
 	    Debug.Log("wave : " + wave);        
         }
     }
