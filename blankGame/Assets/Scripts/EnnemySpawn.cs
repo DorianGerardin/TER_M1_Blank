@@ -18,7 +18,7 @@ public class EnnemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-	speed = gameManager.GetComponent<GameManager>().speed;
+	speed = gameManager.speed;
         enemy = spawnee.GetComponent<Ennemy>();
 	enemy.setSpeed(speed);
         InvokeRepeating("SpawnObject",spawnTime,spawnDelay);
@@ -27,7 +27,7 @@ public class EnnemySpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-	speed = gameManager.GetComponent<GameManager>().speed;
+	speed = gameManager.speed;
 	enemy.setSpeed(speed);
     }
 
