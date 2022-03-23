@@ -18,7 +18,7 @@ public class MainCharacter : MonoBehaviour
     private Vector3 defaultColliderCenter;
     private BoxCollider boxCollider;
 
-    private float dashSpeed = 25f;
+    private float dashSpeed = 50f;
     private float dashTime = 0.2f;
     private bool isDashing = false;
     private float dashStartTime = 0f;
@@ -108,13 +108,14 @@ public class MainCharacter : MonoBehaviour
         if(right) {
             boxCollider.center = new Vector3(boxCollider.center.x, boxCollider.center.y, 0.045f);
             boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y, 0.15f);
-            setRandomRightAnimation();
+            //setRandomRightAnimation();
+            animator.SetBool("PunchRight", true);
         }
         else {
             boxCollider.center = new Vector3(boxCollider.center.x, boxCollider.center.y, 0.045f);
             boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y, 0.15f);
             //setRandomLeftAnimation();
-            animator.SetBool("KickLeft", true);
+            animator.SetBool("PunchLeft", true);
         }
     }
 
