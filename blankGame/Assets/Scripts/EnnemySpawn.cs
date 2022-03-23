@@ -7,7 +7,7 @@ public class EnnemySpawn : MonoBehaviour
 
     public GameObject spawnee;
     public GameObject target;
-    public GameObject gameManager;
+    public GameManager gameManager;
     private Ennemy enemy;
 
     public bool stopSpawn=false;
