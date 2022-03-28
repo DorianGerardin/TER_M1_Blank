@@ -6,8 +6,6 @@ public class EnnemySpawn : MonoBehaviour
 {
 
     public GameObject spawnee;
-    public GameObject target;
-    public GameManager gameManager;
     private Ennemy enemy;
 
     public bool stopSpawn=false;
@@ -18,17 +16,15 @@ public class EnnemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-	speed = gameManager.speed;
-        enemy = spawnee.GetComponent<Ennemy>();
-	enemy.setSpeed(speed);
+        enemy=spawnee.GetComponent<Ennemy>();
+        enemy.setSpeed(speed);
         InvokeRepeating("SpawnObject",spawnTime,spawnDelay);
     }
 
     // Update is called once per frame
     void Update()
     {
-	speed = gameManager.speed;
-	enemy.setSpeed(speed);
+
     }
 
     public void SpawnObject(){
@@ -37,13 +33,14 @@ public class EnnemySpawn : MonoBehaviour
             CancelInvoke("SpawnObject");
         }
         else{
+            enemy.setSpeed(speed);
             Instantiate(spawnee, transform.position, spawnee.transform.rotation);
         }
     }
 
     public void setSpeed(float s){
-	speed=s;   
-	CancelInvoke("SpawnObject");
+        speed=s;   
+        CancelInvoke("SpawnObject");
         InvokeRepeating("SpawnObject",1,spawnDelay);  
     }
 

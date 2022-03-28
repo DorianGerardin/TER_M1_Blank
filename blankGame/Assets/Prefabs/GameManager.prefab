@@ -45,8 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner1: {fileID: 0}
   spawner2: {fileID: 0}
-  player: {fileID: 0}
-  speed: 180
-  timeSpent: 0
-  wave: 0
-  ratioIncrement: 0.9
+  speed: 50
+  ratioIncrement: 2

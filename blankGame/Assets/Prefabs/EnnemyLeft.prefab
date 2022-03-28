@@ -807,9 +807,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db2e90347baa11aef8ad2b7b2adc6311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 3685612929762750731, guid: 594267ac45b10c24aa0df2e1eae04e3d, type: 3}
-  step: 0
-  speed: 27.017027
+  gameManager: {fileID: 8090920470072652249, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
+  target: {fileID: 4603950676768429843, guid: 594267ac45b10c24aa0df2e1eae04e3d, type: 3}
 --- !u!1 &6518340350583174828
 GameObject:
   m_ObjectHideFlags: 0

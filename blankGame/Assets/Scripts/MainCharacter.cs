@@ -150,4 +150,8 @@ public class MainCharacter : MonoBehaviour
                 break;
         }
     }
+
+    public bool getIsDashing(){
+        return isDashing;
+    }
 }
