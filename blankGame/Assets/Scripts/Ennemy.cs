@@ -7,7 +7,7 @@ public class Ennemy : MonoBehaviour
     public GameObject gameManager;
     public MainCharacter target;
     private Rigidbody body;
-    private float speed=50.0f;
+    private float speed=100.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class Ennemy : MonoBehaviour
     }
 
     public void setSpeed(float s){
-	   speed=s;
+	   this.speed=s;
     }
 
     void OnCollisionEnter(Collision col){

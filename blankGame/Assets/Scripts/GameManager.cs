@@ -7,24 +7,24 @@ public class GameManager : MonoBehaviour
     
     public EnnemySpawn spawner1;
     public EnnemySpawn spawner2;
-    public float speed=50f;
+    public float speed;
     private int timeSpent=0;
     private int wave=0;
-    public float ratioIncrement=2.0F;
+    public float ratioIncrement;
     private int HP=3;
 
     // Start is called before the first frame update
     void Start()
     {
-        HP=3;       
+        //HP=3;       
     }
 
     // Update is called once per frame
     void Update()
     {   
-        if(HP>0){
+        //if(HP>0){
             timeSpent++;
-            if(timeSpent==6000){
+            if(timeSpent==300){
     	       timeSpent=0;
                wave++;
     	       speed*=ratioIncrement;
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
                spawner2.setSpeed(speed);
     	       Debug.Log("wave : " + wave);        
             }
-        }
+        //}
     }
 
     public void loseHP(){

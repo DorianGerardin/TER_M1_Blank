@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnnemySpawn : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class EnnemySpawn : MonoBehaviour
     public GameObject spawnee;
     private Ennemy enemy;
 
+    private bool start=false;
     public bool stopSpawn=false;
     public float spawnTime;
     public float spawnDelay;
@@ -18,13 +20,15 @@ public class EnnemySpawn : MonoBehaviour
     {
         enemy=spawnee.GetComponent<Ennemy>();
         enemy.setSpeed(speed);
-        InvokeRepeating("SpawnObject",spawnTime,spawnDelay);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(SceneManager.GetActiveScene()==SceneManager.GetSceneByName("Game") && !start){
+            start=true;
+            InvokeRepeating("SpawnObject",spawnTime,spawnDelay);        
+        }
     }
 
     public void SpawnObject(){
