@@ -2,56 +2,109 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class SfxManager : MonoBehaviour
 {
     
-    public AudioClip MainAudioClip;
-    public AudioClip MenuAudio;
-    public AudioClip GameAudio;
+    public AudioClip MenuAudioMusic;
+    public AudioClip GameAudioMusic;
     public AudioClip ClickAudio;
+    public AudioClip PunchCollisionAudio;
+    public AudioClip PunchAirAudio;
     public static SfxManager sfxInstance;
 
+    [SerializeField] Slider volumeSlider;
+
     [Range(0f, 3f)]
-    public float pitch;
+    public float pitchGame = 0.1f;
+    [Range(0f, 3f)]
+    public float pitchMenu = 1f;
 
-    [Range(1f, 0f)]
-    public float volume;
+    [Range(0f, 1f)]
+    public float volumeMenu = 0.6f;
+    [Range(0f, 1f)]
+    public float volumeGame = 1f;
 
 
-    private AudioSource Audio;   
+    private AudioSource Audio;
+    private AudioSource AudioMenu;  
+    private AudioSource AudioGame;  
+    private bool isPlayingGame;
 
+    public void ChangeVolume()
+    {
+        // Debug.Log("volume changed to " + volumeSlider.value );
+        AudioMenu.volume = volumeSlider.value * volumeMenu;
+        AudioGame.volume = volumeSlider.value * volumeGame;
+    }
+
+    public void PlayClick()
+    {
+        PlayClip(ClickAudio);
+    }
+
+
+    public void SpeedUpGameAudio(){
+        SpeedUpGameAudio(0.1f); 
+    }
+
+    public void SpeedUpGameAudio(float deltaSpeed){
+        AudioGame.pitch += deltaSpeed; 
+    }
+
+    public void freezeWithPunch(){
+
+    }
+
+    public void PunchOnCollision(Collision collision)
+    {
+        PlayClip(PunchCollisionAudio);
+    }
     
-
-    public void playClick()
+    public void PunchNoCollision(Collision collision)
     {
-        Audio.PlayOneShot(ClickAudio);
+        PlayClip(PunchAirAudio);
     }
 
-    public void setPitch(float pitch)
-    {
-        this.pitch = pitch;
-        // Audio.pitch = pitch;
+    public void SwitchScene(){
+        float timeToFade = 3.25f;
+        SwitchScene(timeToFade);    
     }
 
-    public void setVolume(float volume)
-    {
-        this.volume = volume;
-        // Audio.volume = volume;
+    public void SwitchScene(float timeToFade ){
+        StopAllCoroutines();
+        StartCoroutine(FadeAudioToOtherScene(timeToFade));      
     }
 
-    //doesn't stop the previous music work
-    public void gameAudio(){
-        Audio.Stop();
-        // Audio.clip = GameAudio;
-        // Audio.Play();
+    private IEnumerator FadeAudioToOtherScene(float timeToFade){
+        float timeElapsed = 0;
+        if (isPlayingGame){
+            AudioMenu.Play();
+            
+            while (timeElapsed < timeToFade){
+                AudioMenu.volume = Mathf.Lerp(0 , volumeMenu * volumeSlider.value, timeElapsed / timeToFade);
+                AudioGame.volume = Mathf.Lerp(volumeGame * volumeSlider.value, 0, timeElapsed / timeToFade);
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+            AudioGame.Stop();
+        }else{
+            AudioGame.Play();
+            
+            while (timeElapsed < timeToFade){
+                AudioGame.volume = Mathf.Lerp(0 , volumeGame * volumeSlider.value, timeElapsed / timeToFade);
+                AudioMenu.volume = Mathf.Lerp(volumeMenu * volumeSlider.value, 0, timeElapsed / timeToFade);
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+            AudioMenu.Stop();
+        }   
+        isPlayingGame = !isPlayingGame;
     }
 
-    public void menuAudio(){
-    //     Audio = MenuAudio;
-    }
-
+ 
     private void Awake()
     {
         if (sfxInstance != null && sfxInstance != this)
@@ -62,8 +115,27 @@ public class SfxManager : MonoBehaviour
         sfxInstance = this;
         DontDestroyOnLoad(this);
 
-        Audio = gameObject.AddComponent<AudioSource>();
-        Audio.clip = MainAudioClip;
+        AudioMenu = gameObject.AddComponent<AudioSource>();
+        AudioMenu.clip = MenuAudioMusic;
+        AudioMenu.loop = true;
+        AudioMenu.volume = volumeSlider.value * volumeMenu;
+        AudioMenu.pitch = pitchMenu;
+
+        AudioGame = gameObject.AddComponent<AudioSource>();
+        AudioGame.clip = GameAudioMusic;
+        AudioGame.loop = true;
+        AudioGame.volume = volumeSlider.value * volumeGame;
+        AudioGame.pitch = pitchGame;
+
+        isPlayingGame = false;
+    }
+
+    private void PlayClip(AudioClip clip){
+        if (isPlayingGame){
+            AudioGame.PlayOneShot(clip);
+        }else{
+            AudioMenu.PlayOneShot(clip);
+        }
     }
 
     private void Start()
@@ -72,6 +144,18 @@ public class SfxManager : MonoBehaviour
     }
 
     private void Play(){
-        Audio.Play();
+        if (isPlayingGame){
+            AudioGame.Play();
+        }else{
+            AudioMenu.Play();
+        }
+    }
+
+    private void Stop(){
+        if (isPlayingGame){
+            AudioGame.Stop();
+        }else{
+            AudioMenu.Stop();
+        }
     }
 }
