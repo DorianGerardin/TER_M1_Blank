@@ -6,51 +6,61 @@ using UnityEngine.SceneManagement;
 public class EnnemySpawn : MonoBehaviour
 {
 
-    public GameObject spawnee;
-    private Ennemy enemy;
-
-    private bool start=false;
-    public bool stopSpawn=false;
-    public float spawnTime;
-    public float spawnDelay;
-    private float speed=50.0F;
+    public Ennemy spawnee;
+    private float spawnSpeedRatio;
+    private float[] pattern;
+    private int currentArrayPosition;
+    private bool hasPattern=false;
+    private bool finishedPattern;
+    private int timeSpent=0;
+    private float timeBeetween=0.0F;
 
     // Start is called before the first frame update
     void Start()
     {
-        enemy=spawnee.GetComponent<Ennemy>();
-        enemy.setSpeed(speed);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(SceneManager.GetActiveScene()==SceneManager.GetSceneByName("Game") && !start){
-            start=true;
-            InvokeRepeating("SpawnObject",spawnTime,spawnDelay);        
+        if(hasPattern){
+            if(currentArrayPosition<pattern.Length){
+                if(timeSpent>=timeBeetween){
+                    timeBeetween=pattern[currentArrayPosition]*60;
+                    timeSpent=0;
+                    Invoke("SpawnObject",pattern[currentArrayPosition]);
+                }
+                else{
+                    timeSpent++;
+                }
+            }
+            else{
+                finishedPattern=true;
+                hasPattern=false;
+            }
         }
     }
 
     public void SpawnObject(){
-        
-        if(stopSpawn){
-            CancelInvoke("SpawnObject");
-        }
-        else{
-            enemy.setSpeed(speed);
-            Instantiate(spawnee, transform.position, spawnee.transform.rotation);
-        }
+        Instantiate(spawnee.gameObject, transform.position, spawnee.gameObject.transform.rotation);
+        currentArrayPosition++;
     }
 
-    public void setSpeed(float s){
-        speed=s;   
-        CancelInvoke("SpawnObject");
-        InvokeRepeating("SpawnObject",1,spawnDelay);  
+    public void startPattern(float[] p){
+        pattern=p;
+        currentArrayPosition=0;
+        finishedPattern=false;
+        hasPattern=true;
+        timeSpent=0;
+        timeBeetween=0.0F;
     }
 
-    public void setDelay(float d){
-        spawnDelay=d;
-        CancelInvoke("SpawnObject");
-        InvokeRepeating("SpawnObject",1,spawnDelay); 
+    public bool isFinished(){
+        return finishedPattern;
+    }
+
+    public void accelerateSpawnSpeed(float s){
+        spawnSpeedRatio*=s;
     }
 }

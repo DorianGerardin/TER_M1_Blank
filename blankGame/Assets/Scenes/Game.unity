@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -800,6 +800,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1212296796}
     - target: {fileID: 3540591738052127465, guid: 29f8a8c69e72dbf48988a75e23283306, type: 3}
+      propertyPath: spawnee
+      value: 
+      objectReference: {fileID: 7686037139679768650, guid: 603f9165be17a424ca1066953ff32a68, type: 3}
+    - target: {fileID: 3540591738052127465, guid: 29f8a8c69e72dbf48988a75e23283306, type: 3}
       propertyPath: spawnTime
       value: 1
       objectReference: {fileID: 0}
@@ -884,6 +888,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1212296796}
+    - target: {fileID: 5610707265287636558, guid: 631b56ad67c866246b260aa6583ab1fa, type: 3}
+      propertyPath: spawnee
+      value: 
+      objectReference: {fileID: 2820809609434838425, guid: 548b06d199dcbaa48ac21051eadd636b, type: 3}
     - target: {fileID: 5610707265287636558, guid: 631b56ad67c866246b260aa6583ab1fa, type: 3}
       propertyPath: spawnTime
       value: 2
@@ -979,7 +987,7 @@ PrefabInstance:
       objectReference: {fileID: 1016485509}
     - target: {fileID: 8090920470072652248, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
       propertyPath: ratioIncrement
-      value: 2
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 8090920470072652249, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
       propertyPath: m_Name
