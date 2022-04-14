@@ -5,23 +5,54 @@ using UnityEngine;
 public class Ennemy : MonoBehaviour
 {
 
-    public GameObject target;
+    private MainCharacter target;
     private Rigidbody body;
     private float speed=50.0f;
+    private Animator animator;
+    private bool punchBool;
+    private string punchAnimation;
+    public float hitOffset;
+
+    void Awake() {
+        animator = GetComponent<Animator>();
+        body = GetComponent<Rigidbody>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-	body=GetComponent<Rigidbody>();
+        target = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<MainCharacter>();
+
+        if(this.name == "EnnemyRight(Clone)") {
+            hitOffset = 18f;
+            punchBool = animator.GetBool("PunchLeft"); 
+            punchAnimation = "PunchLeft";
+        } else if(this.name == "EnnemyLeft(Clone)")  {
+            hitOffset = 18f;
+            punchBool = animator.GetBool("PunchRight");
+            punchAnimation = "PunchRight";
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        body.velocity = (Quaternion.Euler(0,transform.eulerAngles.y,0) * Vector3.forward * speed);
+        body.velocity = (Quaternion.Euler(0,transform.eulerAngles.y,0) * (Vector3.forward) * speed);
+
+        if(Mathf.Abs(body.position.x - target.getBody().position.x) <= hitOffset && !target.isPunching) {
+            animator.SetBool(punchAnimation, true);
+            Debug.Log("enemy attack");
+            body.velocity = Vector3.zero;
+            //target.takeDamage();
+            Destroy(this.gameObject, 0.7f);
+            //StartCoroutine("OnAnimationComplete", punchAnimation);
+            //target.getBody().isKinematic = true;
+            
+            //target.getBody().isKinematic = false;
+        }
     }
 
-    public void setTarget(GameObject t){
+    public void setTarget(MainCharacter t){
     	target=t;
     }
 
@@ -29,9 +60,32 @@ public class Ennemy : MonoBehaviour
 	    speed=s;
     }
 
-    void OnCollisionEnter(Collision col){
-	if(col.gameObject.name == "mainCharacter"){
-		Destroy(this.gameObject);
-	}
+    public void takeDamage() {
+        Destroy(this.gameObject);
     }
+
+    IEnumerator OnAnimationComplete(string name)
+    {
+        Debug.Log("nom animation :" + name);
+
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        {
+            //wait
+            Debug.Log("l'animation pas terminée");
+            yield return null;
+        }
+
+        Debug.Log("je destroy");
+        Destroy(this.gameObject, 0.6f);
+
+        yield return null;
+    }
+
+    // void OnCollisionEnter(Collision col){
+    //     if(col.gameObject.name == "mainCharacter"){
+    //         //col.rigidbody.isKinematic = true;
+    //         //Destroy(this.gameObject);
+    //         //col.rigidbody.isKinematic = false;
+    //     }
+    // }
 }
