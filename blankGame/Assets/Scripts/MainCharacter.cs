@@ -34,11 +34,14 @@ public class MainCharacter : MonoBehaviour
     private Vector3 leftRotation;
 
     public int healthPoints = 3;
+    public int maxHealthPoints = 3;
     public bool hitEnemy;
     private bool stuned;
 
     public Camera mainCam;
     private SfxManager sfxManager;
+
+    private Vector3 defaultCamPos;
 
     void Awake() {
         body = GetComponent<Rigidbody>();
@@ -79,16 +82,21 @@ public class MainCharacter : MonoBehaviour
 
         distanceRspawner = Mathf.Abs(rightSpawner.transform.position.x - transform.position.x);
         distanceLspawner = Mathf.Abs(leftSpawner.transform.position.x - transform.position.x);
+
+        defaultCamPos = mainCam.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        mainCam.transform.position = new Vector3(transform.position.x, mainCam.transform.position.y, mainCam.transform.position.z);
         //rightSpawner.transform.position = new Vector3(transform.position.x + distanceRspawner, rightSpawner.transform.position.y, rightSpawner.transform.position.z);
         //leftSpawner.transform.position = new Vector3(transform.position.x - distanceLspawner, leftSpawner.transform.position.y, leftSpawner.transform.position.z);
 
         //Debug.Log("stuned : " + stuned);
+
+        mainCam.transform.position = new Vector3(transform.position.x, defaultCamPos.y, defaultCamPos.z);
+        
+        Vector3 distanceCam = (transform.position - defaultCamPos).normalized;
 
         if(isPunching) {
 
@@ -118,12 +126,13 @@ public class MainCharacter : MonoBehaviour
                     if(hitCollider.tag == "Enemy" && hitCollider.name != transform.name){ 
                         //Debug.Log("je touche");
                         hitEnemy = true;
+                        //mainCam.fieldOfView = (90 / 2);
                         sfxManager.PunchOnCollision();
                         hitCollider.transform.GetComponent<Ennemy>().takeDamage();
                     }
                 }
             }
-        }
+        } //else mainCam.transform.position = new Vector3(transform.position.x, defaultCamPos.y, defaultCamPos.z);
     }
 
     public void StartPunch(InputAction.CallbackContext context)

@@ -12,6 +12,7 @@ public class Ennemy : MonoBehaviour
     private bool punchBool;
     private string punchAnimation;
     public float hitOffset;
+    private bool attacking;
 
     void Awake() {
         animator = GetComponent<Animator>();
@@ -22,6 +23,8 @@ public class Ennemy : MonoBehaviour
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<MainCharacter>();
+
+        attacking = false;
 
         if(this.name == "EnnemyRight(Clone)") {
             hitOffset = 18f;
@@ -37,19 +40,28 @@ public class Ennemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        body.velocity = (Quaternion.Euler(0,transform.eulerAngles.y,0) * (Vector3.forward) * speed);
 
-        if(Mathf.Abs(body.position.x - target.getBody().position.x) <= hitOffset && !target.isPunching) {
+        Debug.Log("kinematic : " + target.getBody().isKinematic);
+
+        if((Mathf.Abs(body.position.x - target.getBody().position.x) <= hitOffset) && !target.isPunching && !attacking) {
+            attacking = true;
+            //updateMainCharacterKinematic();
+            //target.getBody().isKinematic = true;
             animator.SetBool(punchAnimation, true);
             Debug.Log("enemy attack");
             body.velocity = Vector3.zero;
-            //target.takeDamage();
+            target.Invoke("takeDamage", 0.6f);
             Destroy(this.gameObject, 0.7f);
+            //Invoke("updateMainCharacterKinematic", 0.7f);
             //StartCoroutine("OnAnimationComplete", punchAnimation);
-            //target.getBody().isKinematic = true;
-            
             //target.getBody().isKinematic = false;
-        }
+        } else if(attacking) body.velocity = Vector3.zero;
+        else body.velocity = (Quaternion.Euler(0,transform.eulerAngles.y,0) * (Vector3.forward) * speed);
+        
+    }
+
+    public void updateMainCharacterKinematic() {
+        target.getBody().isKinematic = !target.getBody().isKinematic;
     }
 
     public void setTarget(MainCharacter t){

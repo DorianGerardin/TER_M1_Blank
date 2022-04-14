@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     
     public EnnemySpawn spawner1;
     public EnnemySpawn spawner2;
+    public MainCharacter mainCharacter;
     private int wave;
     public float ratioIncrement;
     private int timeSpent=0;
@@ -18,9 +19,16 @@ public class GameManager : MonoBehaviour
     private float deltaTime;
     private bool isSpwanFinished = true;
 
+    public GameObject[] hearts;
+    public GameObject[] grayHearts;
+
+    private SfxManager sfxManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        mainCharacter = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<MainCharacter>();
+        sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
         score=0;
         consequentHits=0;
         wave=1;
@@ -31,25 +39,32 @@ public class GameManager : MonoBehaviour
     void Update()
     {   
 
-        // deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-        // float fps = 1.0f / deltaTime;
+        if(mainCharacter.healthPoints == 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            sfxManager.SwitchScene();
+        }
 
-        Debug.Log(timeSpent);
         if(SceneManager.GetActiveScene().name=="Game"){   
             if(spawner1.isFinished() && spawner2.isFinished()){
-                // if(timeSpent>=fps){
-                //     wave++;
-                //     Debug.Log("Wave : "+wave);
-                //     launchRandomPattern();
-                //     timeSpent=0;
-                // }
                 if(isSpwanFinished)
                     StartCoroutine("launchNewWave");
-                // else{
-                //     timeSpent++;
-                // }
             }
         }
+
+        for(int i = 0; i < mainCharacter.maxHealthPoints; i++)
+        {
+            if (i >= mainCharacter.healthPoints)
+            {
+                hearts[i].SetActive(false);
+                grayHearts[i].SetActive(true);
+            }
+            else
+            {
+                hearts[i].SetActive(true);
+                grayHearts[i].SetActive(false);
+            }
+        }
+
     }
 
     IEnumerator launchNewWave()
