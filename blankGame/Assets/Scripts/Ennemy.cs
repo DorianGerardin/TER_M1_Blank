@@ -7,7 +7,7 @@ public class Ennemy : MonoBehaviour
 
     private MainCharacter target;
     private Rigidbody body;
-    private float speed=50.0f;
+    public float speed=50.0f;
     private Animator animator;
     private bool punchBool;
     private string punchAnimation;
