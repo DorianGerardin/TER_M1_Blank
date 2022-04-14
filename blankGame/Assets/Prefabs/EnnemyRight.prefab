@@ -716,7 +716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db2e90347baa11aef8ad2b7b2adc6311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 8090920470072652249, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
+  gameManager: {fileID: 8090920470072652248, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
+  timeManager: {fileID: 7751125622844230779, guid: e9c4b15df61c8129f84423f76f4af028, type: 3}
   target: {fileID: 4603950676768429843, guid: 594267ac45b10c24aa0df2e1eae04e3d, type: 3}
 --- !u!1 &5824037875868468104
 GameObject:

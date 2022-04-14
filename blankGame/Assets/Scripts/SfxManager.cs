@@ -58,13 +58,15 @@ public class SfxManager : MonoBehaviour
 
     }
 
-    public void PunchOnCollision(Collision collision)
+    public void PunchOnCollision()
     {
         PlayClip(PunchCollisionAudio);
     }
     
-    public void PunchNoCollision(Collision collision)
+    public void PunchNoCollision()
     {
+        // float old_pitch = PunchAirAudio.pitch;
+        // PunchAirAudio.pitch = Random.Range(-1.0f, 1.0f);
         PlayClip(PunchAirAudio);
     }
 
@@ -156,6 +158,14 @@ public class SfxManager : MonoBehaviour
             AudioGame.Stop();
         }else{
             AudioMenu.Stop();
+        }
+    }
+
+    private void Update(){
+        if (isPlayingGame){
+            AudioGame.pitch = Time.timeScale;
+        }else{
+            AudioMenu.pitch = Time.timeScale;
         }
     }
 }

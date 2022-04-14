@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Ennemy : MonoBehaviour
 {
-    public GameObject gameManager;
+    public GameManager gameManager;
+    public GameObject timeManager;
     public MainCharacter target;
     private Rigidbody body;
     private float speed=100.0f;
@@ -12,6 +13,7 @@ public class Ennemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //timeManager=
 	   body=GetComponent<Rigidbody>();
     }
 
@@ -31,9 +33,6 @@ public class Ennemy : MonoBehaviour
 
     void OnCollisionEnter(Collision col){
 	   if(col.gameObject.name == "mainCharacter"){
-		  if(!target.getIsDashing()){
-            gameManager.GetComponent<GameManager>().loseHP();
-          }
           Destroy(this.gameObject); 
 	   }
     }

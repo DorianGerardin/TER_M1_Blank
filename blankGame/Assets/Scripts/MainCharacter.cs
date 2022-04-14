@@ -72,6 +72,7 @@ public class MainCharacter : MonoBehaviour
         mainCam.transform.position = new Vector3(transform.position.x, mainCam.transform.position.y,  mainCam.transform.position.z);
 
         if(isDashing) {
+            mainCam.transform.position = new Vector3(transform.position.x, mainCam.transform.position.y,  mainCam.transform.position.z+1.0F);
             if (direction.x == 1) Punch(true, direction);
             if (direction.x == -1) Punch(false, direction);
 
@@ -84,6 +85,7 @@ public class MainCharacter : MonoBehaviour
                 body.velocity = Vector3.zero;
                 boxCollider.center = defaultColliderCenter;
                 boxCollider.size = defaultColliderSize;
+                mainCam.transform.position = new Vector3(transform.position.x, mainCam.transform.position.y,  mainCam.transform.position.z-1.0F);
             }
         }
     }
@@ -100,6 +102,7 @@ public class MainCharacter : MonoBehaviour
     }
 
     private void Punch(bool right, Vector3 direction) {
+
         if(direction.x == 1) transform.rotation = Quaternion.Euler(rightRotation);
         if(direction.x == -1) transform.rotation = Quaternion.Euler(leftRotation);
 
