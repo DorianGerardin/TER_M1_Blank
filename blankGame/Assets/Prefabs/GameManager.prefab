@@ -43,10 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b695cb18a915c76596ef06d8966faf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawner1: {fileID: 0}
-  spawner2: {fileID: 0}
-  player: {fileID: 0}
+  spawner1: {fileID: 5610707265287636545, guid: 631b56ad67c866246b260aa6583ab1fa, type: 3}
+  spawner2: {fileID: 3540591738052127464, guid: 29f8a8c69e72dbf48988a75e23283306, type: 3}
   speed: 180
-  timeSpent: 0
-  wave: 0
   ratioIncrement: 0.9

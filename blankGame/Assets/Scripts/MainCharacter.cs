@@ -14,20 +14,34 @@ public class MainCharacter : MonoBehaviour
     List<string> leftAnims = new List<string>();
 
     private Rigidbody body;
-    private Vector3 defaultColliderSize;
-    private Vector3 defaultColliderCenter;
     private BoxCollider boxCollider;
 
-    private float dashSpeed = 50f;
-    private float dashTime = 0.2f;
-    private bool isDashing = false;
-    private float dashStartTime = 0f;
+    public GameObject rightCollider;
+    public GameObject leftCollider;
+    private GameObject currentCollider;
+    public GameObject rightSpawner, leftSpawner;
+    private float distanceRspawner, distanceLspawner;
+
+    public float punchSpeed = 80f;
+    public float punchDuration = 0.1f;
+    public bool isPunching = false;
+    private float punchStartTime = 0f;
     private Vector3 direction;
+    public float timeToWaitUntilPunch = 0.12f;
+    private float stunTime = 1f;
 
     private Vector3 rightRotation;
     private Vector3 leftRotation;
 
+    public int healthPoints = 3;
+    public int maxHealthPoints = 3;
+    public bool hitEnemy;
+    private bool stuned;
+
     public Camera mainCam;
+    private SfxManager sfxManager;
+
+    private Vector3 defaultCamPos;
 
     void Awake() {
         body = GetComponent<Rigidbody>();
@@ -35,6 +49,7 @@ public class MainCharacter : MonoBehaviour
         animator = GetComponent<Animator>();
         rightAnims = new List<string>();
         leftAnims = new List<string>();
+        sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
     }
 
     // Start is called before the first frame update
@@ -62,61 +77,114 @@ public class MainCharacter : MonoBehaviour
         leftAnims.Add("PL");
         leftAnims.Add("KL");
 
-        defaultColliderCenter = boxCollider.center;
-        defaultColliderSize = boxCollider.size;
+        hitEnemy = false;
+        stuned = false;
+
+        distanceRspawner = Mathf.Abs(rightSpawner.transform.position.x - transform.position.x);
+        distanceLspawner = Mathf.Abs(leftSpawner.transform.position.x - transform.position.x);
+
+        defaultCamPos = mainCam.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        mainCam.transform.position = new Vector3(transform.position.x, mainCam.transform.position.y,  mainCam.transform.position.z);
+        //rightSpawner.transform.position = new Vector3(transform.position.x + distanceRspawner, rightSpawner.transform.position.y, rightSpawner.transform.position.z);
+        //leftSpawner.transform.position = new Vector3(transform.position.x - distanceLspawner, leftSpawner.transform.position.y, leftSpawner.transform.position.z);
 
-        if(isDashing) {
-            if (direction.x == 1) Punch(true, direction);
-            if (direction.x == -1) Punch(false, direction);
+        //Debug.Log("stuned : " + stuned);
 
-            if(Time.time >= dashStartTime + dashTime){
-                animator.SetBool("PunchRight", false);
-                animator.SetBool("PunchLeft", false);
-                animator.SetBool("KickRight", false);
-                animator.SetBool("KickLeft", false);
-                isDashing = false;
+        mainCam.transform.position = new Vector3(transform.position.x, defaultCamPos.y, defaultCamPos.z);
+        
+        Vector3 distanceCam = (transform.position - defaultCamPos).normalized;
+
+        if(isPunching) {
+
+            currentCollider = direction.x == 1 ? rightCollider : leftCollider;
+
+            if(Time.time >= punchStartTime + punchDuration || hitEnemy){
+
+                //Debug.Log("hit ennemy : " + hitEnemy);
+
+                if(!hitEnemy) {
+                    StartCoroutine("Stun");
+                }
+
+                hitEnemy = false;
+                if (direction.x == 1) animator.SetBool("PunchRight", false);
+                else animator.SetBool("PunchLeft", false);
+                // animator.SetBool("KickRight", false);
+                // animator.SetBool("KickLeft", false);
+                currentCollider.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                isPunching = false;
                 body.velocity = Vector3.zero;
-                boxCollider.center = defaultColliderCenter;
-                boxCollider.size = defaultColliderSize;
             }
-        }
+            else {
+                currentCollider.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                Collider[] hitColliders = Physics.OverlapSphere(currentCollider.transform.position, 0.5f);
+                foreach (var hitCollider in hitColliders) {
+                    if(hitCollider.tag == "Enemy" && hitCollider.name != transform.name){ 
+                        //Debug.Log("je touche");
+                        hitEnemy = true;
+                        //mainCam.fieldOfView = (90 / 2);
+                        sfxManager.PunchOnCollision();
+                        hitCollider.transform.GetComponent<Ennemy>().takeDamage();
+                    }
+                }
+            }
+        } //else mainCam.transform.position = new Vector3(transform.position.x, defaultCamPos.y, defaultCamPos.z);
     }
 
-    public void StartDash(InputAction.CallbackContext context)
+    public void StartPunch(InputAction.CallbackContext context)
     {
-        if(!isDashing && context.started) {
-            isDashing = true;
-            dashStartTime = Time.time;
+        if(!isPunching && context.started && !stuned) {
+            Debug.Log("context duration : " + context.duration);
             Vector2 inputVector = context.ReadValue<Vector2>();
             inputVector = Vector3.ClampMagnitude(inputVector, 1);
             direction = new Vector3(inputVector.x, inputVector.y, 0);
+            object[] parms = new object[1]{direction};
+            StartCoroutine("Punch", parms);
         }
     }
 
-    private void Punch(bool right, Vector3 direction) {
-        if(direction.x == 1) transform.rotation = Quaternion.Euler(rightRotation);
-        if(direction.x == -1) transform.rotation = Quaternion.Euler(leftRotation);
-
-        body.velocity = direction * dashSpeed * ((Time.time - dashStartTime)*dashSpeed);
-        
-        if(right) {
-            boxCollider.center = new Vector3(boxCollider.center.x, boxCollider.center.y, 0.045f);
-            boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y, 0.15f);
+    IEnumerator Punch(object[] parms)
+    {
+        Vector3 direction = (Vector3)parms[0];
+        if(direction.x == 1) {
+            body.rotation = Quaternion.Euler(rightRotation);
             //setRandomRightAnimation();
             animator.SetBool("PunchRight", true);
         }
         else {
-            boxCollider.center = new Vector3(boxCollider.center.x, boxCollider.center.y, 0.045f);
-            boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y, 0.15f);
+            body.rotation = Quaternion.Euler(leftRotation);
             //setRandomLeftAnimation();
             animator.SetBool("PunchLeft", true);
         }
+
+        yield return new WaitForFixedUpdate();
+
+        isPunching = true;
+        punchStartTime = Time.time;
+        body.AddForce(direction * punchSpeed * 200, ForceMode.Acceleration);
+
+        yield return null;
+    }
+
+    IEnumerator Stun()
+    {   
+        sfxManager.PunchNoCollision();
+        stuned = true;
+        yield return new WaitForSeconds(stunTime);
+        stuned = false;
+        yield return null;
+    }
+
+    public Rigidbody getBody() {
+        return body;
+    }
+
+    public void takeDamage() {
+        this.healthPoints--;
     }
 
     private void setRandomRightAnimation() {

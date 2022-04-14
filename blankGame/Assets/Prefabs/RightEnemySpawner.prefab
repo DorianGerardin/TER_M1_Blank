@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnee: {fileID: 5658556333733038388, guid: 603f9165be17a424ca1066953ff32a68, type: 3}
-  target: {fileID: 3685612929762750731, guid: 594267ac45b10c24aa0df2e1eae04e3d, type: 3}
+  target: {fileID: 3536058810519431602, guid: 594267ac45b10c24aa0df2e1eae04e3d, type: 3}
+  gameManager: {fileID: 8090920470072652248, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
   stopSpawn: 0
   spawnTime: 2
   spawnDelay: 2
-  speed: 180

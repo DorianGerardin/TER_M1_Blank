@@ -31,6 +31,7 @@ public class SfxManager : MonoBehaviour
     private AudioSource Audio;
     private AudioSource AudioMenu;  
     private AudioSource AudioGame;  
+    private AudioSource AudioEffects; 
     private bool isPlayingGame;
 
     public void ChangeVolume()
@@ -58,13 +59,15 @@ public class SfxManager : MonoBehaviour
 
     }
 
-    public void PunchOnCollision(Collision collision)
+    public void PunchOnCollision()
     {
         PlayClip(PunchCollisionAudio);
     }
     
-    public void PunchNoCollision(Collision collision)
+    public void PunchNoCollision()
     {
+        // float old_pitch = PunchAirAudio.pitch;
+        // PunchAirAudio.pitch = Random.Range(-1.0f, 1.0f);
         PlayClip(PunchAirAudio);
     }
 
@@ -127,15 +130,18 @@ public class SfxManager : MonoBehaviour
         AudioGame.volume = volumeSlider.value * volumeGame;
         AudioGame.pitch = pitchGame;
 
+        AudioEffects = gameObject.AddComponent<AudioSource>();
+
         isPlayingGame = false;
     }
 
     private void PlayClip(AudioClip clip){
-        if (isPlayingGame){
-            AudioGame.PlayOneShot(clip);
-        }else{
-            AudioMenu.PlayOneShot(clip);
-        }
+        AudioEffects.PlayOneShot(clip);
+        // if (isPlayingGame){
+        //     AudioGame.PlayOneShot(clip);
+        // }else{
+        //     AudioMenu.PlayOneShot(clip);
+        // }
     }
 
     private void Start()
@@ -156,6 +162,14 @@ public class SfxManager : MonoBehaviour
             AudioGame.Stop();
         }else{
             AudioMenu.Stop();
+        }
+    }
+
+    private void Update(){
+        if (isPlayingGame){
+            AudioGame.pitch = Time.timeScale;
+        }else{
+            AudioMenu.pitch = Time.timeScale;
         }
     }
 }
