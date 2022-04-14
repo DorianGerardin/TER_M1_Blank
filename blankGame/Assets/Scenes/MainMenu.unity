@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -463,10 +463,22 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1496062476}
+        m_TargetAssemblyTypeName: SfxManager, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &451838581
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,7 +775,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1737,8 +1749,8 @@ RectTransform:
   m_Father: {fileID: 495878177}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1965,7 +1977,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 436, y: 685}
+  m_AnchoredPosition: {x: 436, y: 385}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1428683284
@@ -2114,7 +2126,7 @@ GameObject:
   - component: {fileID: 1496062476}
   m_Layer: 0
   m_Name: SfxManager
-  m_TagString: Untagged
+  m_TagString: sfxManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2131,12 +2143,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f2290530c50e214aa17efae3bc1feca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainAudioClip: {fileID: 8300000, guid: 1dbbc2e9df0b54a47b3842a635ecaab2, type: 3}
-  MenuAudio: {fileID: 8300000, guid: 1dbbc2e9df0b54a47b3842a635ecaab2, type: 3}
-  GameAudio: {fileID: 8300000, guid: d5f978e7a29ca1e4785f48bc5bdf6c6b, type: 3}
+  MenuAudioMusic: {fileID: 8300000, guid: 1dbbc2e9df0b54a47b3842a635ecaab2, type: 3}
+  GameAudioMusic: {fileID: 8300000, guid: d5f978e7a29ca1e4785f48bc5bdf6c6b, type: 3}
   ClickAudio: {fileID: 8300000, guid: 8d06bd29db18a4943b57ab7fafc3da1b, type: 3}
-  pitch: 0
-  volume: 0
+  PunchCollisionAudio: {fileID: 8300000, guid: 9558d456095ecf14fac5871043d871b3, type: 3}
+  PunchAirAudio: {fileID: 8300000, guid: 245c64a9fc653f74d8b2a60eb3967428, type: 3}
+  volumeSlider: {fileID: 328323808}
+  pitchGame: 1.1
+  pitchMenu: 1
+  volumeMenu: 1
+  volumeGame: 1
 --- !u!4 &1496062477
 Transform:
   m_ObjectHideFlags: 0
@@ -2693,7 +2709,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1496062476}
         m_TargetAssemblyTypeName: SfxManager, Assembly-CSharp
-        m_MethodName: playClick
+        m_MethodName: SwitchScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -34,10 +34,11 @@ public class MainCharacter : MonoBehaviour
     private Vector3 leftRotation;
 
     public int healthPoints = 3;
-    bool hitEnemy;
-    bool stuned;
+    public bool hitEnemy;
+    private bool stuned;
 
     public Camera mainCam;
+    private SfxManager sfxManager;
 
     void Awake() {
         body = GetComponent<Rigidbody>();
@@ -45,6 +46,7 @@ public class MainCharacter : MonoBehaviour
         animator = GetComponent<Animator>();
         rightAnims = new List<string>();
         leftAnims = new List<string>();
+        sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
     }
 
     // Start is called before the first frame update
@@ -100,13 +102,13 @@ public class MainCharacter : MonoBehaviour
                     StartCoroutine("Stun");
                 }
 
+                hitEnemy = false;
                 if (direction.x == 1) animator.SetBool("PunchRight", false);
                 else animator.SetBool("PunchLeft", false);
                 // animator.SetBool("KickRight", false);
                 // animator.SetBool("KickLeft", false);
                 currentCollider.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
                 isPunching = false;
-                hitEnemy = false;
                 body.velocity = Vector3.zero;
             }
             else {
@@ -116,6 +118,7 @@ public class MainCharacter : MonoBehaviour
                     if(hitCollider.tag == "Enemy" && hitCollider.name != transform.name){ 
                         //Debug.Log("je touche");
                         hitEnemy = true;
+                        sfxManager.PunchOnCollision();
                         hitCollider.transform.GetComponent<Ennemy>().takeDamage();
                     }
                 }
@@ -160,6 +163,7 @@ public class MainCharacter : MonoBehaviour
 
     IEnumerator Stun()
     {   
+        sfxManager.PunchNoCollision();
         stuned = true;
         yield return new WaitForSeconds(stunTime);
         stuned = false;
