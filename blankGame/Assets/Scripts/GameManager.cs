@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class GameManager : MonoBehaviour
@@ -12,7 +13,6 @@ public class GameManager : MonoBehaviour
     public MainCharacter mainCharacter;
     private int wave;
     public float ratioIncrement;
-    private int timeSpent=0;
     private long score;
     private int consequentHits;
     private int numberOfPattern=2;
@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] hearts;
     public GameObject[] grayHearts;
+
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI comboText;
 
     private SfxManager sfxManager;
 
@@ -38,6 +41,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+
+        if(mainCharacter.hitEnemy){
+            increaseScore();
+        }
+        scoreText.text="score : "+score;
+        comboText.text="combo x"+consequentHits;
 
         if(mainCharacter.healthPoints == 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
