@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {   
 
+        if(mainCharacter.stuned){
+            consequentHits=0;
+        }
         if(mainCharacter.hitEnemy){
             increaseScore();
         }

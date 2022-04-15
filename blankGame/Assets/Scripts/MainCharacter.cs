@@ -36,7 +36,7 @@ public class MainCharacter : MonoBehaviour
     public int healthPoints = 3;
     public int maxHealthPoints = 3;
     public bool hitEnemy;
-    private bool stuned;
+    public bool stuned;
 
     public Camera mainCam;
     private SfxManager sfxManager;
