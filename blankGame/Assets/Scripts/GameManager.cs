@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         scoreText.text="score : "+score;
         comboText.text="combo x"+consequentHits;
 
-        if(mainCharacter.healthPoints == 0) {
+        if(mainCharacter.healthPoints <= 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             sfxManager.SwitchScene();
         }
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
     IEnumerator launchNewWave()
     {
         isSpwanFinished = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         wave++;
         Debug.Log("Wave : "+wave);
         launchRandomPattern();
@@ -102,8 +102,8 @@ public class GameManager : MonoBehaviour
 
     public void launchPattern1(){
         Debug.Log("Launching Pattern 1");
-        float[] pattern1={1.0F,1.0F,1.0F};
-        float[] pattern2={1.5F,1.5F,1.5F};
+        float[] pattern1={2.0F,2.0F,2.0F};
+        float[] pattern2={3.0F,2.0F,2.0F};
         for(int i=0;i<pattern1.Length;i++){
             // if(wave>1){
             //     pattern1[i]/=(ratioIncrement*(wave-1));
@@ -120,8 +120,8 @@ public class GameManager : MonoBehaviour
 
     public void launchPattern2(){
         Debug.Log("Launching Pattern 2");
-        float[] pattern1={1.0F,2.0F,1.0F};
-        float[] pattern2={2.0F,0.5F,1.5F};
+        float[] pattern1={2.0F,4.0F,2.0F};
+        float[] pattern2={4.0F,2.0F,3.0F};
         for(int i=0;i<pattern1.Length;i++){
             // if(wave>1){
             //     pattern1[i]/=(ratioIncrement*(wave-1));

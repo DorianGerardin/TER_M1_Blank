@@ -2000,7 +2000,7 @@ PrefabInstance:
       objectReference: {fileID: 1212296796}
     - target: {fileID: 8090920470072652248, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
       propertyPath: ratioIncrement
-      value: 1
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 8090920470072652248, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
       propertyPath: hearts.Array.size

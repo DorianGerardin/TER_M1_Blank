@@ -53,8 +53,10 @@ public class TimeManager: MonoBehaviour
         }
        //yield return new WaitForSecondsRealtime(timePerInterval);
         timeToggle = !timeToggle;
-        if (!timeToggle)
+        if (!timeToggle){
             StartCoroutine(FadeToLag(speedUp));
+            Time.timeScale=1f;
+        }
     }
 
 }
