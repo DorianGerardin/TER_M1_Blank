@@ -50,7 +50,7 @@ public class Ennemy : MonoBehaviour
             animator.SetBool(punchAnimation, true);
             Debug.Log("enemy attack");
             body.velocity = Vector3.zero;
-            //target.Invoke("takeDamage", 0.6f);
+            target.Invoke("takeDamage", 0.6f);
             Destroy(this.gameObject, 0.7f);
             //Invoke("updateMainCharacterKinematic", 0.7f);
             //StartCoroutine("OnAnimationComplete", punchAnimation);

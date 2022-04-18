@@ -26,7 +26,7 @@ public class EnnemySpawn : MonoBehaviour
     void Update()
     {
 
-        //deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
         float fps = 1.0f / deltaTime;
 
         //Debug.Log("fps : " + fps);
