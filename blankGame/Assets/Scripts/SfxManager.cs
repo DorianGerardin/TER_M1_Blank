@@ -16,14 +16,15 @@ public class SfxManager : MonoBehaviour
     public static SfxManager sfxInstance;
 
     [SerializeField] Slider volumeSlider;
+    private float volumeSliderValue ;
 
     [Range(0f, 3f)]
-    public float pitchGame = 0.1f;
+    public float pitchGame = 1f;
     [Range(0f, 3f)]
     public float pitchMenu = 1f;
 
     [Range(0f, 1f)]
-    public float volumeMenu = 0.6f;
+    public float volumeMenu = 1f;
     [Range(0f, 1f)]
     public float volumeGame = 1f;
 
@@ -34,11 +35,11 @@ public class SfxManager : MonoBehaviour
     private AudioSource AudioEffects; 
     private bool isPlayingGame;
 
-    public void ChangeVolume()
+    public void ChangeVolume(float volumeSliderValue)
     {
-        // Debug.Log("volume changed to " + volumeSlider.value );
-        AudioMenu.volume = volumeSlider.value * volumeMenu;
-        AudioGame.volume = volumeSlider.value * volumeGame;
+        this.volumeSliderValue = volumeSliderValue;
+        AudioMenu.volume = volumeSliderValue * volumeMenu;
+        AudioGame.volume = volumeSliderValue * volumeGame;
     }
 
     public void PlayClick()
@@ -61,14 +62,12 @@ public class SfxManager : MonoBehaviour
 
     public void PunchOnCollision()
     {
-        PlayClip(PunchCollisionAudio);
+        PlayClipRandomPitch(PunchCollisionAudio);
     }
     
     public void PunchNoCollision()
     {
-        // float old_pitch = PunchAirAudio.pitch;
-        // PunchAirAudio.pitch = Random.Range(-1.0f, 1.0f);
-        PlayClip(PunchAirAudio);
+        PlayClipRandomPitch(PunchAirAudio);
     }
 
     public void SwitchScene(){
@@ -87,8 +86,8 @@ public class SfxManager : MonoBehaviour
             AudioMenu.Play();
             
             while (timeElapsed < timeToFade){
-                AudioMenu.volume = Mathf.Lerp(0 , volumeMenu * volumeSlider.value, timeElapsed / timeToFade);
-                AudioGame.volume = Mathf.Lerp(volumeGame * volumeSlider.value, 0, timeElapsed / timeToFade);
+                AudioMenu.volume = Mathf.Lerp(0 , volumeMenu * volumeSliderValue, timeElapsed / timeToFade);
+                AudioGame.volume = Mathf.Lerp(volumeGame * volumeSliderValue, 0, timeElapsed / timeToFade);
                 timeElapsed += Time.deltaTime;
                 yield return null;
             }
@@ -97,8 +96,8 @@ public class SfxManager : MonoBehaviour
             AudioGame.Play();
             
             while (timeElapsed < timeToFade){
-                AudioGame.volume = Mathf.Lerp(0 , volumeGame * volumeSlider.value, timeElapsed / timeToFade);
-                AudioMenu.volume = Mathf.Lerp(volumeMenu * volumeSlider.value, 0, timeElapsed / timeToFade);
+                AudioGame.volume = Mathf.Lerp(0 , volumeGame * volumeSliderValue, timeElapsed / timeToFade);
+                AudioMenu.volume = Mathf.Lerp(volumeMenu * volumeSliderValue, 0, timeElapsed / timeToFade);
                 timeElapsed += Time.deltaTime;
                 yield return null;
             }
@@ -118,31 +117,36 @@ public class SfxManager : MonoBehaviour
         sfxInstance = this;
         DontDestroyOnLoad(this);
 
+        volumeSliderValue = volumeSlider.value;
         AudioMenu = gameObject.AddComponent<AudioSource>();
         AudioMenu.clip = MenuAudioMusic;
         AudioMenu.loop = true;
-        AudioMenu.volume = volumeSlider.value * volumeMenu;
+        AudioMenu.volume = volumeSliderValue * volumeMenu;
         AudioMenu.pitch = pitchMenu;
 
         AudioGame = gameObject.AddComponent<AudioSource>();
         AudioGame.clip = GameAudioMusic;
         AudioGame.loop = true;
-        AudioGame.volume = volumeSlider.value * volumeGame;
+        AudioGame.volume = volumeSliderValue * volumeGame;   
         AudioGame.pitch = pitchGame;
 
         AudioEffects = gameObject.AddComponent<AudioSource>();
 
         isPlayingGame = false;
+
+        
     }
 
     private void PlayClip(AudioClip clip){
+        AudioEffects.pitch = 1f;
         AudioEffects.PlayOneShot(clip);
-        // if (isPlayingGame){
-        //     AudioGame.PlayOneShot(clip);
-        // }else{
-        //     AudioMenu.PlayOneShot(clip);
-        // }
     }
+
+    private void PlayClipRandomPitch(AudioClip clip){
+        AudioEffects.pitch = Random.Range(0.7f, 2.0f);
+        AudioEffects.PlayOneShot(clip);
+    }
+
 
     private void Start()
     {

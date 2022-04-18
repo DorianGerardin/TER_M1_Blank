@@ -41,7 +41,7 @@ public class Ennemy : MonoBehaviour
     void Update()
     {
 
-        Debug.Log("kinematic : " + target.getBody().isKinematic);
+        //Debug.Log("kinematic : " + target.getBody().isKinematic);
 
         if((Mathf.Abs(body.position.x - target.getBody().position.x) <= hitOffset) && !target.isPunching && !attacking) {
             attacking = true;
@@ -50,7 +50,8 @@ public class Ennemy : MonoBehaviour
             animator.SetBool(punchAnimation, true);
             Debug.Log("enemy attack");
             body.velocity = Vector3.zero;
-            target.Invoke("takeDamage", 0.6f);
+            // target.Invoke("takeDamage", 0.6f);
+            Invoke("takeDamageOnPlayer", 0.6f);
             Destroy(this.gameObject, 0.7f);
             //Invoke("updateMainCharacterKinematic", 0.7f);
             //StartCoroutine("OnAnimationComplete", punchAnimation);
@@ -91,6 +92,10 @@ public class Ennemy : MonoBehaviour
         Destroy(this.gameObject, 0.6f);
 
         yield return null;
+    }
+
+    private void takeDamageOnPlayer(){
+        target.takeDamage();
     }
 
     // void OnCollisionEnter(Collision col){

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -467,8 +467,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1496062476}
-        m_TargetAssemblyTypeName: SfxManager, Assembly-CSharp
+      - m_Target: {fileID: 1540032105}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 1
         m_Arguments:
@@ -1034,18 +1034,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1496062476}
-        m_TargetAssemblyTypeName: SfxManager, Assembly-CSharp
-        m_MethodName: PlayClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 1540032105}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: ActivateSettingsMenu
@@ -1056,7 +1044,19 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1496062476}
+        m_TargetAssemblyTypeName: SfxManager, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &743207833
 MonoBehaviour:
@@ -2089,6 +2089,8 @@ MonoBehaviour:
   settingsFirstButton: {fileID: 328323806}
   mainMenu: {fileID: 1540032103}
   settingsMenu: {fileID: 1427665593}
+  volumeSlider: {fileID: 328323808}
+  hasSfxManager: 0
 --- !u!1 &1665894889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2568,7 +2570,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1496062476}
         m_TargetAssemblyTypeName: SfxManager, Assembly-CSharp
-        m_MethodName: SwitchScene
+        m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

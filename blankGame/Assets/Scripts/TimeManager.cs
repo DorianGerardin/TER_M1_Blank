@@ -27,7 +27,7 @@ public class TimeManager: MonoBehaviour
 
     void Update() {
         if(mainCharacter.hitEnemy) {
-            SlowDownTime(0.5f);
+            //SlowDownTime(0.5f);
         }
     }
 
