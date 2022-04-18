@@ -13,6 +13,7 @@ public class SfxManager : MonoBehaviour
     public AudioClip ClickAudio;
     public AudioClip PunchCollisionAudio;
     public AudioClip PunchAirAudio;
+    public AudioClip YellAudio;
     public static SfxManager sfxInstance;
 
     [SerializeField] Slider volumeSlider;
@@ -68,6 +69,11 @@ public class SfxManager : MonoBehaviour
     public void PunchNoCollision()
     {
         PlayClipRandomPitch(PunchAirAudio);
+    }
+
+    public void Yell()
+    {
+        PlayClipRandomPitch(YellAudio, 0.5f, 1.5f );
     }
 
     public void SwitchScene(){
@@ -142,10 +148,12 @@ public class SfxManager : MonoBehaviour
         AudioEffects.PlayOneShot(clip);
     }
 
-    private void PlayClipRandomPitch(AudioClip clip){
-        AudioEffects.pitch = Random.Range(0.7f, 2.0f);
+    private void PlayClipRandomPitch(AudioClip clip, float min = (float) 0.7, float max = (float) 2.0){
+        AudioEffects.pitch = Random.Range(min, max);
         AudioEffects.PlayOneShot(clip);
     }
+
+
 
 
     private void Start()

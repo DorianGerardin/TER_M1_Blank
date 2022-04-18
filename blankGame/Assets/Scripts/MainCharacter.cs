@@ -185,6 +185,7 @@ public class MainCharacter : MonoBehaviour
 
     public void takeDamage() {
         this.healthPoints--;
+        sfxManager.Yell();
     }
 
     private void setRandomRightAnimation() {
