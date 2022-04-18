@@ -43,6 +43,8 @@ public class MainCharacter : MonoBehaviour
 
     private Vector3 defaultCamPos;
 
+    public ParticleSystem particleSystem;
+
     void Awake() {
         body = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
@@ -129,6 +131,20 @@ public class MainCharacter : MonoBehaviour
                         //mainCam.fieldOfView = (90 / 2);
                         sfxManager.PunchOnCollision();
                         hitCollider.transform.GetComponent<Ennemy>().takeDamage();
+
+                        Debug.Log("before : " + particleSystem.transform.position);
+                        var particleSystemPosition = particleSystem.transform.position;
+                        particleSystemPosition = hitCollider.transform.position;
+                        particleSystemPosition.x += direction.x == 1 ? 6f : -6f ;
+                        particleSystemPosition.y = currentCollider.transform.position.y;
+                        particleSystem.transform.position=particleSystemPosition;
+                        Debug.Log("after : " + particleSystem.transform.position);
+                        var em = particleSystem.emission; 
+                        var duration = particleSystem.duration;
+                        em.enabled = true;
+                        
+                        particleSystem.Play();
+
                     }
                 }
             }
