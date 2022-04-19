@@ -9,12 +9,18 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public GameObject menuFirstButton, settingsFirstButton;
-    public GameObject mainMenu, settingsMenu;
+    public GameObject squareMenuFirstButton, squareSettingsFirstButton;
+    public GameObject mainMenu, settingsMenu, mainMenuSquare, settingsMenuSquare;
     
-    [SerializeField]  Slider volumeSlider;
+    [SerializeField]  Slider volumeSlider, volumeSliderSquare;
 
     private SfxManager sfxManager;
     public bool hasSfxManager = false;
+
+    public Image image;
+    public Canvas menuCanva;
+    public Sprite squarredSprite;
+    public Sprite largeSprite;
 
     public void PlayGame()
     {
@@ -26,24 +32,48 @@ public class MainMenu : MonoBehaviour
     public void ActivateSettingsMenu()
     {
       mainMenu.SetActive(false);
-      settingsMenu.SetActive(true);
-      
-      EventSystem.current.SetSelectedGameObject(null);
-      EventSystem.current.SetSelectedGameObject(settingsFirstButton);
+      mainMenuSquare.SetActive(false);
+
+      if((float)Screen.width / (float)Screen.height < 1.45f ) {
+        settingsMenuSquare.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(squareSettingsFirstButton);
+      } else {
+        settingsMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(settingsFirstButton);
+      }
     }
     
     public void ActivateMainMenu()
     {
       settingsMenu.SetActive(false);
-      mainMenu.SetActive(true);
-      
-      EventSystem.current.SetSelectedGameObject(null);
-      EventSystem.current.SetSelectedGameObject(menuFirstButton);
+      settingsMenuSquare.SetActive(false);
+
+      if((float)Screen.width / (float)Screen.height < 1.45f ) {
+        mainMenuSquare.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(squareMenuFirstButton);
+
+      } else {
+        mainMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(menuFirstButton);
+      }
     }
 
     public void ChangeVolume()
     {
+       sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
+      Debug.Log(sfxManager);
+      if((float)Screen.width / (float)Screen.height < 1.45f ) {
+        Debug.Log("volumeSliderSquare" + volumeSliderSquare.value);
+        sfxManager.ChangeVolume((float)volumeSliderSquare.value);
+      } else {
+        Debug.Log("volumeSlider" + volumeSlider.value);
         sfxManager.ChangeVolume((float)volumeSlider.value);
+      }
+        
     }
 
     public void QuitGame()
@@ -54,22 +84,48 @@ public class MainMenu : MonoBehaviour
 
     public void Awake()
     {
-      EventSystem.current.SetSelectedGameObject(null);
-      EventSystem.current.SetSelectedGameObject(menuFirstButton);
+      if((float)Screen.width / (float)Screen.height < 1.45f ) {
+        mainMenuSquare.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(squareMenuFirstButton);
+
+      } else {
+        mainMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(menuFirstButton);
+      }
 
       sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
       if (sfxManager != null) hasSfxManager = true;
 
+      Debug.Log(sfxManager);
+
     }
 
     public void PlayClick(){
+      //  Debug.Log(sfxManager);
+      sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
       sfxManager.PlayClick();
     }
 
     public void Update(){
       if (sfxManager != null) hasSfxManager = true;
       else hasSfxManager = false;
+      Debug.Log("sfx" + hasSfxManager);
+      // Debug.Log("width : " + Screen.width);
+      // Debug.Log("height : " + Screen.height);
 
-      
+      Debug.Log("ratio : " + ((float)Screen.width / (float)Screen.height));
+
+      if((float)Screen.width / (float)Screen.height < 1.45f ) {
+        image.sprite = squarredSprite;
+        // mainMenu.SetActive(false);
+        // mainMenuSquare.SetActive(true);
+
+      } else {
+        image.sprite = largeSprite;
+        // mainMenu.SetActive(true);
+        // mainMenuSquare.SetActive(false);
+      }
     }
 }

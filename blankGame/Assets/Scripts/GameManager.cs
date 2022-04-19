@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         score=0;
         consequentHits=0;
         wave=1;
-        launchRandomPattern();       
+        launchRandomPattern();   
     }
 
     // Update is called once per frame

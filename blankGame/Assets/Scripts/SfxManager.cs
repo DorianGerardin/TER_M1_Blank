@@ -17,6 +17,7 @@ public class SfxManager : MonoBehaviour
     public static SfxManager sfxInstance;
 
     [SerializeField] Slider volumeSlider;
+    [SerializeField] Slider squareVolumeSlider;
     private float volumeSliderValue ;
 
     [Range(0f, 3f)]
@@ -123,7 +124,13 @@ public class SfxManager : MonoBehaviour
         sfxInstance = this;
         DontDestroyOnLoad(this);
 
-        volumeSliderValue = volumeSlider.value;
+        if((float)Screen.width / (float)Screen.height < 1.45f ) {
+            volumeSliderValue = squareVolumeSlider.value;
+            //volumeSliderValue = volumeSlider.value;
+        }else{
+            volumeSliderValue = volumeSlider.value;
+            //volumeSliderValue = squareVolumeSlider.value;
+        }
         AudioMenu = gameObject.AddComponent<AudioSource>();
         AudioMenu.clip = MenuAudioMusic;
         AudioMenu.loop = true;
@@ -178,6 +185,7 @@ public class SfxManager : MonoBehaviour
     }
 
     private void Update(){
+        // Debug.Log("volumeSlider", volumeSlider);
         if (isPlayingGame){
             AudioGame.pitch = Time.timeScale;
         }else{
