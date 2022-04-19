@@ -592,6 +592,7 @@ GameObject:
   - component: {fileID: 4775595510444563599}
   - component: {fileID: 928364250238080765}
   - component: {fileID: 7686037139679768650}
+  - component: {fileID: -7031984070468950212}
   m_Layer: 7
   m_Name: EnnemyRight
   m_TagString: Enemy
@@ -718,6 +719,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   hitOffset: 0
+  particleSystem: {fileID: 7828426585777540237, guid: 9b910ae6f8d47524982bb53185d4495e, type: 3}
+--- !u!114 &-7031984070468950212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5658556333733038388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.8679245, g: 0.36354572, b: 0.52473897, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5824037875868468104
 GameObject:
   m_ObjectHideFlags: 0

@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
 
     public void increaseScore(){
         consequentHits++;
-        score+=100*consequentHits*wave;
+        score+=10*consequentHits*wave;
     }
 
     public void gameOver(){

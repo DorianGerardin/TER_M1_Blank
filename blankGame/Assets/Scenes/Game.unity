@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6738,7 +6738,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -10918,6 +10918,72 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &1414221621
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7828426585777540227, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_Name
+      value: SparksEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 90.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 33.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540236, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828426585777540237, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+--- !u!198 &1414221622 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7828426585777540237, guid: 95eecc6cacad79c419e6965bb4a4772d, type: 3}
+  m_PrefabInstance: {fileID: 1414221621}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1422937271 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5610707265287636545, guid: 631b56ad67c866246b260aa6583ab1fa, type: 3}
@@ -11477,6 +11543,10 @@ PrefabInstance:
       propertyPath: particleSystem
       value: 
       objectReference: {fileID: 988394817}
+    - target: {fileID: 3536058810519431605, guid: 594267ac45b10c24aa0df2e1eae04e3d, type: 3}
+      propertyPath: takeDamageParticleSystem
+      value: 
+      objectReference: {fileID: 1414221622}
     - target: {fileID: 3536058810573227645, guid: 594267ac45b10c24aa0df2e1eae04e3d, type: 3}
       propertyPath: m_Layer
       value: 6

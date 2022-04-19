@@ -44,6 +44,7 @@ public class MainCharacter : MonoBehaviour
     private Vector3 defaultCamPos;
 
     public ParticleSystem particleSystem;
+    public ParticleSystem takeDamageParticleSystem;
 
     void Awake() {
         body = GetComponent<Rigidbody>();
@@ -132,15 +133,13 @@ public class MainCharacter : MonoBehaviour
                         sfxManager.PunchOnCollision();
                         hitCollider.transform.GetComponent<Ennemy>().takeDamage();
 
-                        Debug.Log("before : " + particleSystem.transform.position);
                         var particleSystemPosition = particleSystem.transform.position;
                         particleSystemPosition = hitCollider.transform.position;
                         particleSystemPosition.x += direction.x == 1 ? 6f : -6f ;
                         particleSystemPosition.y = currentCollider.transform.position.y;
                         particleSystem.transform.position=particleSystemPosition;
-                        Debug.Log("after : " + particleSystem.transform.position);
                         var em = particleSystem.emission; 
-                        var duration = particleSystem.duration;
+                        //var duration = particleSystem.duration;
                         em.enabled = true;
                         
                         particleSystem.Play();
@@ -201,6 +200,16 @@ public class MainCharacter : MonoBehaviour
 
     public void takeDamage() {
         this.healthPoints--;
+        var particleSystemPosition = takeDamageParticleSystem.transform.position;
+        particleSystemPosition = transform.position;
+        particleSystemPosition.x += direction.x == 1 ? 1f : -1f ;
+        particleSystemPosition.y = transform.position.y + 6f;
+        takeDamageParticleSystem.transform.position=particleSystemPosition;
+        var em = takeDamageParticleSystem.emission; 
+        var duration = takeDamageParticleSystem.duration;
+        em.enabled = true;
+        
+        takeDamageParticleSystem.Play();
         sfxManager.Yell();
     }
 
@@ -234,5 +243,19 @@ public class MainCharacter : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void playParticleSystem(ParticleSystem ps, Vector3 position){
+        // var particleSystemPosition = particleSystem.transform.position;
+        // particleSystemPosition = hitCollider.transform.position;
+        // particleSystemPosition.x += direction.x == 1 ? 6f : -6f ;
+        // particleSystemPosition.y = currentCollider.transform.position.y;
+        var psPosition = ps.transform.position;
+        psPosition = position;
+        var em = particleSystem.emission; 
+        var duration = particleSystem.duration;
+        em.enabled = true;
+        
+        particleSystem.Play();
     }
 }
