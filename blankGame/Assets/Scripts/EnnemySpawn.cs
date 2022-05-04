@@ -26,10 +26,11 @@ public class EnnemySpawn : MonoBehaviour
     void Update()
     {
 
-        //deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-        float fps = 1.0f / Time.deltaTime;
+        deltaTime += (Time.deltaTime);
+        deltaTime/=2.0F;
+        float fps = 1.0f / deltaTime;
 
-        //Debug.Log("fps : " + fps);
+        Debug.Log("fps : " + fps);
 
         if(hasPattern){
             if(currentArrayPosition<pattern.Length){
@@ -37,6 +38,7 @@ public class EnnemySpawn : MonoBehaviour
                     timeBeetween=pattern[currentArrayPosition]*fps;
                     timeSpent=0;
                     Invoke("SpawnObject",pattern[currentArrayPosition]);
+                    currentArrayPosition++;
                 }
                 else{
                     timeSpent++;
@@ -51,8 +53,7 @@ public class EnnemySpawn : MonoBehaviour
 
     public void SpawnObject(){
         //Debug.Log("je spawn");
-        Instantiate(spawnee.gameObject, transform.position, spawnee.gameObject.transform.rotation);
-        currentArrayPosition++;
+        Instantiate(spawnee.gameObject, transform.position + Vector3.forward, spawnee.gameObject.transform.rotation);
     }
 
     public void startPattern(float[] p){

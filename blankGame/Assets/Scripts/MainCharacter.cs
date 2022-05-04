@@ -28,7 +28,7 @@ public class MainCharacter : MonoBehaviour
     private float punchStartTime = 0f;
     private Vector3 direction;
     public float timeToWaitUntilPunch = 0.12f;
-    private float stunTime = 1f;
+    private float stunTime = 0.5f;
 
     private Vector3 rightRotation;
     private Vector3 leftRotation;

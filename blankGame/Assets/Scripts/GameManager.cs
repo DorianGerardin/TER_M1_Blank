@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
     IEnumerator launchNewWave()
     {
         isSpwanFinished = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f/(wave*ratioIncrement));
         wave++;
         Debug.Log("Wave : "+wave);
         launchRandomPattern();
@@ -102,16 +102,18 @@ public class GameManager : MonoBehaviour
 
     public void launchPattern1(){
         Debug.Log("Launching Pattern 1");
-        float[] pattern1={2.0F,2.0F,2.0F};
-        float[] pattern2={3.0F,2.0F,2.0F};
+        float[] pattern1={1.0F,1.0F,1.0F};
+        float[] pattern2={1.5F,1.0F,1.0F};
         for(int i=0;i<pattern1.Length;i++){
-            // if(wave>1){
-            //     pattern1[i]/=(ratioIncrement*(wave-1));
-            //     pattern2[i]/=(ratioIncrement*(wave-1));
-            // }
             for(int w=1;w<wave;w++){
                 pattern1[i]/=ratioIncrement;
                 pattern1[i]/=ratioIncrement;
+            }
+            if(pattern1[i]<=0.75F){
+                pattern1[i]=0.75F;
+            }
+            if(pattern2[i]<=0.75F){
+                pattern2[i]=0.75F;
             }
         }
         spawner1.startPattern(pattern1);
@@ -120,16 +122,18 @@ public class GameManager : MonoBehaviour
 
     public void launchPattern2(){
         Debug.Log("Launching Pattern 2");
-        float[] pattern1={2.0F,4.0F,2.0F};
-        float[] pattern2={4.0F,2.0F,3.0F};
+        float[] pattern1={1.0F,2.0F,1.0F};
+        float[] pattern2={2.0F,1.0F,1.5F};
         for(int i=0;i<pattern1.Length;i++){
-            // if(wave>1){
-            //     pattern1[i]/=(ratioIncrement*(wave-1));
-            //     pattern2[i]/=(ratioIncrement*(wave-1));
-            // }
             for(int w=1;w<wave;w++){
                 pattern1[i]/=ratioIncrement;
                 pattern1[i]/=ratioIncrement;
+            }
+            if(pattern1[i]<=0.75F){
+                pattern1[i]=0.75F;
+            }
+            if(pattern2[i]<=0.75F){
+                pattern2[i]=0.75F;
             }
         }
         spawner1.startPattern(pattern1);
