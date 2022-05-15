@@ -12,36 +12,25 @@ public class EnnemySpawn : MonoBehaviour
     private int currentArrayPosition;
     private bool hasPattern=false;
     private bool finishedPattern;
-    private int timeSpent=0;
+    private float timeSpent;
     private float timeBeetween=0.0F;
-    private float deltaTime = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        timeSpent=Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        deltaTime += (Time.deltaTime);
-        deltaTime/=2.0F;
-        float fps = 1.0f / deltaTime;
-
-        // Debug.Log("fps : " + fps);
-
         if(hasPattern){
             if(currentArrayPosition<pattern.Length){
-                if(timeSpent>=timeBeetween){
-                    timeBeetween=pattern[currentArrayPosition]*fps;
-                    timeSpent=0;
-                    Invoke("SpawnObject",pattern[currentArrayPosition]);
+                if(Time.time>=timeSpent+timeBeetween){
+                    timeSpent=Time.time;
+                    SpawnObject();
+                    timeBeetween=pattern[currentArrayPosition];
                     currentArrayPosition++;
-                }
-                else{
-                    timeSpent++;
                 }
             }
             else{
@@ -62,7 +51,7 @@ public class EnnemySpawn : MonoBehaviour
         finishedPattern=false;
         hasPattern=true;
         timeSpent=0;
-        timeBeetween=0.0F;
+        timeBeetween=pattern[0];
     }
 
     public bool isFinished(){
