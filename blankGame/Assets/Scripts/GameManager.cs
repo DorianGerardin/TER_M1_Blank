@@ -16,8 +16,6 @@ public class GameManager : MonoBehaviour
     private long score;
     private int consequentHits;
     private int numberOfPattern=2;
-    private float deltaTime;
-    private bool isSpwanFinished = true;
 
     public GameObject[] hearts;
     public GameObject[] grayHearts;
@@ -27,7 +25,9 @@ public class GameManager : MonoBehaviour
 
     private SfxManager sfxManager;
 
-    public TimeManager timeManager;
+    private float timeSpent=0.0F;
+    private float timeToWait=1.0F;
+    private float timeToCompletePattern;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
         score=0;
         consequentHits=0;
         wave=1;
+        timeToWait=1.0F;
+        timeSpent=Time.time;
         launchRandomPattern();   
     }
 
@@ -56,13 +58,19 @@ public class GameManager : MonoBehaviour
         if(mainCharacter.healthPoints <= 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             sfxManager.SwitchScene();
-            timeManager.RevertBackTime();
         }
 
         if(SceneManager.GetActiveScene().name=="Game"){   
             if(spawner1.isFinished() && spawner2.isFinished()){
-                if(isSpwanFinished)
-                    StartCoroutine("launchNewWave");
+                if(Time.time>=timeSpent+timeToWait+timeToCompletePattern){
+                    timeToCompletePattern=0.0F;
+                    launchNewWave();
+                    timeSpent=Time.time;
+                    if(timeToWait>0.3F){
+                        timeToWait/=ratioIncrement;
+                    }
+                    Debug.Log("time : "+(timeToWait+timeToCompletePattern));
+                }
             }
         }
 
@@ -82,16 +90,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    IEnumerator launchNewWave()
-    {
-        isSpwanFinished = false;
-        yield return new WaitForSeconds(1f/(wave*ratioIncrement));
-        wave++;
-        Debug.Log("Wave : "+wave);
+    public void launchNewWave(){
         launchRandomPattern();
-        isSpwanFinished = true;
-        yield return null;
-
+        wave++;
     }
 
     public void increaseScore(){
@@ -108,16 +109,18 @@ public class GameManager : MonoBehaviour
         float[] pattern1={1.0F,1.0F,1.0F};
         float[] pattern2={1.5F,1.0F,1.0F};
         for(int i=0;i<pattern1.Length;i++){
-            for(int w=1;w<wave;w++){
+            /*for(int w=1;w<wave;w++){
                 pattern1[i]/=ratioIncrement;
-                pattern1[i]/=ratioIncrement;
-            }
+                pattern2[i]/=ratioIncrement;
+            }*/
             if(pattern1[i]<=0.75F){
                 pattern1[i]=0.75F;
             }
             if(pattern2[i]<=0.75F){
                 pattern2[i]=0.75F;
             }
+            timeToCompletePattern+=Mathf.Max(pattern1[i],pattern2[i]);
+            Debug.Log("Max : "+Mathf.Max(pattern1[i],pattern2[i]));
         }
         spawner1.startPattern(pattern1);
         spawner2.startPattern(pattern2);
@@ -128,16 +131,19 @@ public class GameManager : MonoBehaviour
         float[] pattern1={1.0F,2.0F,1.0F};
         float[] pattern2={2.0F,1.0F,1.5F};
         for(int i=0;i<pattern1.Length;i++){
-            for(int w=1;w<wave;w++){
+            /*for(int w=1;w<wave;w++){
                 pattern1[i]/=ratioIncrement;
-                pattern1[i]/=ratioIncrement;
-            }
+                pattern2[i]/=ratioIncrement;
+            }*/
             if(pattern1[i]<=0.75F){
                 pattern1[i]=0.75F;
             }
             if(pattern2[i]<=0.75F){
                 pattern2[i]=0.75F;
             }
+            timeToCompletePattern+=Mathf.Max(pattern1[i],pattern2[i]);
+
+            Debug.Log("Max : "+Mathf.Max(pattern1[i],pattern2[i]));
         }
         spawner1.startPattern(pattern1);
         spawner2.startPattern(pattern2);
@@ -145,6 +151,11 @@ public class GameManager : MonoBehaviour
 
     public void launchRandomPattern(){
         int patternNumber=Random.Range(1,numberOfPattern+1);
-        Invoke("launchPattern"+patternNumber,0.0F);
+        if(patternNumber==1){
+            launchPattern1();
+        }
+        else{
+            launchPattern2();
+        }
     }
 }
