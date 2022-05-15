@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11524,6 +11524,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1422937271}
     - target: {fileID: 3536058810519431605, guid: 594267ac45b10c24aa0df2e1eae04e3d, type: 3}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1807299749}
+    - target: {fileID: 3536058810519431605, guid: 594267ac45b10c24aa0df2e1eae04e3d, type: 3}
       propertyPath: leftCollider
       value: 
       objectReference: {fileID: 1488665686}
@@ -11993,6 +11997,10 @@ PrefabInstance:
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 132170498}
+    - target: {fileID: 8090920470072652248, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 1807299749}
     - target: {fileID: 8090920470072652248, guid: ae35d45dd215d0445963f80cad5b3f1f, type: 3}
       propertyPath: mainCharacter
       value: 

@@ -65,7 +65,7 @@ public class MainMenu : MonoBehaviour
     public void ChangeVolume()
     {
        sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
-      Debug.Log(sfxManager);
+      // Debug.Log(sfxManager);
       if((float)Screen.width / (float)Screen.height < 1.45f ) {
         Debug.Log("volumeSliderSquare" + volumeSliderSquare.value);
         sfxManager.ChangeVolume((float)volumeSliderSquare.value);
@@ -98,7 +98,7 @@ public class MainMenu : MonoBehaviour
       sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
       if (sfxManager != null) hasSfxManager = true;
 
-      Debug.Log(sfxManager);
+      // Debug.Log(sfxManager);
 
     }
 
@@ -111,11 +111,11 @@ public class MainMenu : MonoBehaviour
     public void Update(){
       if (sfxManager != null) hasSfxManager = true;
       else hasSfxManager = false;
-      Debug.Log("sfx" + hasSfxManager);
+      // Debug.Log("sfx" + hasSfxManager);
       // Debug.Log("width : " + Screen.width);
       // Debug.Log("height : " + Screen.height);
 
-      Debug.Log("ratio : " + ((float)Screen.width / (float)Screen.height));
+      // Debug.Log("ratio : " + ((float)Screen.width / (float)Screen.height));
 
       if((float)Screen.width / (float)Screen.height < 1.45f ) {
         image.sprite = squarredSprite;

@@ -42,6 +42,7 @@ public class SfxManager : MonoBehaviour
         this.volumeSliderValue = volumeSliderValue;
         AudioMenu.volume = volumeSliderValue * volumeMenu;
         AudioGame.volume = volumeSliderValue * volumeGame;
+        AudioEffects.volume = volumeSliderValue;
     }
 
     public void PlayClick()
@@ -144,6 +145,7 @@ public class SfxManager : MonoBehaviour
         AudioGame.pitch = pitchGame;
 
         AudioEffects = gameObject.AddComponent<AudioSource>();
+        AudioEffects.volume = volumeSliderValue;
 
         isPlayingGame = false;
 
@@ -157,6 +159,8 @@ public class SfxManager : MonoBehaviour
 
     private void PlayClipRandomPitch(AudioClip clip, float min = (float) 0.7, float max = (float) 2.0){
         AudioEffects.pitch = Random.Range(min, max);
+        // float oldVOlume = AudioEffects.volume;
+        // AudioEffects.volume = oldVOlume * volumeSliderValue;
         AudioEffects.PlayOneShot(clip);
     }
 

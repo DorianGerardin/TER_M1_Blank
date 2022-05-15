@@ -40,6 +40,8 @@ public class MainCharacter : MonoBehaviour
 
     public Camera mainCam;
     private SfxManager sfxManager;
+    public TimeManager timeManager;
+
 
     private Vector3 defaultCamPos;
 
@@ -87,6 +89,8 @@ public class MainCharacter : MonoBehaviour
         distanceLspawner = Mathf.Abs(leftSpawner.transform.position.x - transform.position.x);
 
         defaultCamPos = mainCam.transform.position;
+
+        animator.applyRootMotion = false;
     }
 
     // Update is called once per frame
@@ -102,8 +106,10 @@ public class MainCharacter : MonoBehaviour
         Vector3 distanceCam = (transform.position - defaultCamPos).normalized;
 
         if(isPunching) {
-
+            // animator.applyRootMotion = false;
             currentCollider = direction.x == 1 ? rightCollider : leftCollider;
+
+            
 
             if(Time.time >= punchStartTime + punchDuration || hitEnemy){
 
@@ -111,6 +117,7 @@ public class MainCharacter : MonoBehaviour
 
                 if(!hitEnemy) {
                     StartCoroutine("Stun");
+                    timeManager.RevertBackTime();
                 }
 
                 hitEnemy = false;
@@ -118,26 +125,46 @@ public class MainCharacter : MonoBehaviour
                 else animator.SetBool("PunchLeft", false);
                 // animator.SetBool("KickRight", false);
                 // animator.SetBool("KickLeft", false);
-                currentCollider.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
+                currentCollider.GetComponent<Renderer>().material.SetColor("_Color", new Color32(42, 234, 247, 80));
+                currentCollider.GetComponent<Renderer>().material.shader=Shader.Find("Transparent/Diffuse");
                 isPunching = false;
                 body.velocity = Vector3.zero;
+                body.angularVelocity = Vector3.zero;
             }
             else {
-                currentCollider.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                timeManager.RevertBackTime();
+                currentCollider.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
                 Collider[] hitColliders = Physics.OverlapSphere(currentCollider.transform.position, 0.5f);
                 foreach (var hitCollider in hitColliders) {
-                    if(hitCollider.tag == "Enemy" && hitCollider.name != transform.name){ 
+                    if(hitCollider.tag == "Enemy" && hitCollider.name != transform.name &&  ! hitCollider.transform.GetComponent<Ennemy>().isDead()){ 
+
+                        // animator.applyRootMotion = true;
+                        // Vector3  pos = this.transform.position ;
+                        // pos += animator.deltaPosition;
+                        // this.transform.position = pos;
+                        // this.transform.rotation = animator.deltaRotation * transform.rotation;
+
+                        body.velocity = Vector3.zero;
+                        body.angularVelocity = Vector3.zero;
+
+                        Debug.Log("hit ennemy : " + hitEnemy);
                         //Debug.Log("je touche");
                         hitEnemy = true;
                         //mainCam.fieldOfView = (90 / 2);
                         sfxManager.PunchOnCollision();
+                        // Ennemy ennemy  = hitCollider.transform.GetComponent<Ennemy>();
+                        // if (!ennemy.dead)
                         hitCollider.transform.GetComponent<Ennemy>().takeDamage();
+                        
+                        timeManager.SlowDownTimeInstantly(0.3F, 0.2F);
 
                         var particleSystemPosition = particleSystem.transform.position;
                         particleSystemPosition = hitCollider.transform.position;
                         particleSystemPosition.x += direction.x == 1 ? 6f : -6f ;
                         particleSystemPosition.y = currentCollider.transform.position.y;
                         particleSystem.transform.position=particleSystemPosition;
+                        Debug.Log("hitCollider.transform.position ->" + hitCollider.transform.position);
+                        Debug.Log("particleSystemPosition         ->" + particleSystemPosition);
                         var em = particleSystem.emission; 
                         //var duration = particleSystem.duration;
                         em.enabled = true;
@@ -206,7 +233,6 @@ public class MainCharacter : MonoBehaviour
         particleSystemPosition.y = transform.position.y + 6f;
         takeDamageParticleSystem.transform.position=particleSystemPosition;
         var em = takeDamageParticleSystem.emission; 
-        var duration = takeDamageParticleSystem.duration;
         em.enabled = true;
         
         takeDamageParticleSystem.Play();
@@ -253,7 +279,6 @@ public class MainCharacter : MonoBehaviour
         var psPosition = ps.transform.position;
         psPosition = position;
         var em = particleSystem.emission; 
-        var duration = particleSystem.duration;
         em.enabled = true;
         
         particleSystem.Play();

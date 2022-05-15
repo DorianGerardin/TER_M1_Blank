@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     private SfxManager sfxManager;
 
+    public TimeManager timeManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
         if(mainCharacter.healthPoints <= 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             sfxManager.SwitchScene();
+            timeManager.RevertBackTime();
         }
 
         if(SceneManager.GetActiveScene().name=="Game"){   

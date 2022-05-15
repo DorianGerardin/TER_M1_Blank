@@ -30,7 +30,7 @@ public class EnnemySpawn : MonoBehaviour
         deltaTime/=2.0F;
         float fps = 1.0f / deltaTime;
 
-        Debug.Log("fps : " + fps);
+        // Debug.Log("fps : " + fps);
 
         if(hasPattern){
             if(currentArrayPosition<pattern.Length){

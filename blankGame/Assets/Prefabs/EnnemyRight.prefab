@@ -719,7 +719,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   hitOffset: 0
-  particleSystem: {fileID: 7828426585777540237, guid: 9b910ae6f8d47524982bb53185d4495e, type: 3}
 --- !u!114 &-7031984070468950212
 MonoBehaviour:
   m_ObjectHideFlags: 0
