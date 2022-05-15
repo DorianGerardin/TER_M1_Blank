@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI comboText;
 
     private SfxManager sfxManager;
+    public TimeManager timeManager;
 
     private float timeSpent=0.0F;
     private float timeToWait=1.0F;
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
         comboText.text="combo x"+consequentHits;
 
         if(mainCharacter.healthPoints <= 0) {
+            timeManager.RevertBackTime();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             sfxManager.SwitchScene();
         }
