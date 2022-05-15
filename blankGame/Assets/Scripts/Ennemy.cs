@@ -91,11 +91,11 @@ public class Ennemy : MonoBehaviour
             
             body.velocity = Vector3.zero;
             this.dead = true;
-            animator.SetBool(punchAnimation, false);
-            animator.SetBool(dieAnimation, true);
-            Invoke("DestroySelf", 0.8f);
+            // animator.SetBool(punchAnimation, false);
+            // animator.SetBool(dieAnimation, true);
+            // Invoke("DestroySelf", 0.8f);
         }
-        // Destroy(this.gameObject);
+        Destroy(this.gameObject);
     }
 
     IEnumerator OnAnimationComplete(string name)

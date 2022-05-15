@@ -112,25 +112,30 @@ public class MainCharacter : MonoBehaviour
             
 
             if(Time.time >= punchStartTime + punchDuration || hitEnemy){
-
                 //Debug.Log("hit ennemy : " + hitEnemy);
 
-                if(!hitEnemy) {
-                    StartCoroutine("Stun");
-                    timeManager.RevertBackTime();
-                }
+                // if(!hitEnemy) {
+                //     StartCoroutine("Stun");
+                // }
 
-                hitEnemy = false;
                 if (direction.x == 1) animator.SetBool("PunchRight", false);
                 else animator.SetBool("PunchLeft", false);
                 // animator.SetBool("KickRight", false);
                 // animator.SetBool("KickLeft", false);
+                body.velocity = Vector3.zero;
+            }
+
+            if(Time.time >= punchStartTime + punchDuration + 0.25f || hitEnemy){
+                //Debug.Log("hit ennemy : " + hitEnemy);
+
+                if(!hitEnemy) {
+                    StartCoroutine("Stun");
+                }
                 currentCollider.GetComponent<Renderer>().material.SetColor("_Color", new Color32(42, 234, 247, 80));
                 currentCollider.GetComponent<Renderer>().material.shader=Shader.Find("Transparent/Diffuse");
+                hitEnemy = false;
                 isPunching = false;
-                body.velocity = Vector3.zero;
-                body.angularVelocity = Vector3.zero;
-            }
+            } 
             else {
                 timeManager.RevertBackTime();
                 currentCollider.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
@@ -156,7 +161,7 @@ public class MainCharacter : MonoBehaviour
                         // if (!ennemy.dead)
                         hitCollider.transform.GetComponent<Ennemy>().takeDamage();
                         
-                        timeManager.SlowDownTimeInstantly(0.3F, 0.2F);
+                        timeManager.SlowDownTimeInstantly(0.5F, 0.2F);
 
                         var particleSystemPosition = particleSystem.transform.position;
                         particleSystemPosition = hitCollider.transform.position;
