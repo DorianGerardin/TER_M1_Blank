@@ -13,9 +13,11 @@ public class Ennemy : MonoBehaviour
     private bool dead;
 
     private string punchAnimation;
-    private string dieAnimation;
     public float hitOffset;
     private bool attacking;
+
+    private Vector3 expulseDirection;
+    private GameObject gravityCenter;
 
 
     void Awake() {
@@ -31,17 +33,18 @@ public class Ennemy : MonoBehaviour
 
         attacking = false;
         dead = false;
+        gravityCenter = transform.Find("gravityCenter").gameObject;
 
         if(this.name == "EnnemyRight(Clone)") {
             hitOffset = 18f;
             punchBool = animator.GetBool("PunchLeft"); 
             punchAnimation = "PunchLeft";
-            dieAnimation = "DieRight";
+            expulseDirection = new Vector3(1, 0.6f, 0);
         } else if(this.name == "EnnemyLeft(Clone)")  {
             hitOffset = 18f;
             punchBool = animator.GetBool("PunchRight");
             punchAnimation = "PunchRight";
-            dieAnimation = "DieLeft";
+            expulseDirection = new Vector3(-1, 0.6f, 0);
 
         }
     }
@@ -70,7 +73,14 @@ public class Ennemy : MonoBehaviour
             else body.velocity = (Quaternion.Euler(0,transform.eulerAngles.y,0) * (Vector3.forward) * speed);
         }
         else{
-            body.velocity = Vector3.zero;
+            Destroy(this.gameObject, 3f);
+            transform.RotateAround(gravityCenter.transform.position, new Vector3(0, 0, 1), -360 * 20 * Time.deltaTime);
+            // Collider[] hitColliders = Physics.OverlapSphere(gravityCenter.transform.position, 2f);
+            // foreach (var hitCollider in hitColliders) {
+            //     if(hitCollider.tag == "Enemy"){ 
+            //         hitCollider.transform.GetComponent<Ennemy>().takeDamage();
+            //     }
+            // }
         }
     }
 
@@ -88,14 +98,15 @@ public class Ennemy : MonoBehaviour
 
     public void takeDamage() {
         if (!dead){
-            
-            body.velocity = Vector3.zero;
             this.dead = true;
-            // animator.SetBool(punchAnimation, false);
-            // animator.SetBool(dieAnimation, true);
-            // Invoke("DestroySelf", 0.8f);
+
+            float randomOffset = Random.Range(-0.2f, 0.2f);
+            // Debug.Log("random : " + randomOffset);
+            Vector3 newExpulseDirection = new Vector3(expulseDirection.x, expulseDirection.y + randomOffset, expulseDirection.z);
+            body.AddForce(newExpulseDirection * 300, ForceMode.Impulse); 
+
         }
-        Destroy(this.gameObject);
+        // Destroy(this.gameObject);
     }
 
     IEnumerator OnAnimationComplete(string name)
@@ -117,10 +128,6 @@ public class Ennemy : MonoBehaviour
 
     private void takeDamageOnPlayer(){
         if (!dead) target.takeDamage();
-    }
-
-    private void DestroySelf(){
-        Destroy(this.gameObject);
     }
 
     // void OnCollisionEnter(Collision col){

@@ -125,7 +125,7 @@ public class MainCharacter : MonoBehaviour
                 body.velocity = Vector3.zero;
             }
 
-            if(Time.time >= punchStartTime + punchDuration + 0.25f || hitEnemy){
+            if(Time.time >= punchStartTime + punchDuration + 0.15f || hitEnemy){
                 //Debug.Log("hit ennemy : " + hitEnemy);
 
                 if(!hitEnemy) {
