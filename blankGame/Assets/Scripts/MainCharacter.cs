@@ -212,7 +212,9 @@ public class MainCharacter : MonoBehaviour
 
         isPunching = true;
         punchStartTime = Time.time;
-        body.AddForce(direction * punchSpeed * 200, ForceMode.Acceleration);
+        if (body.velocity.x<=0.1f){
+            body.AddForce(direction * punchSpeed * 200, ForceMode.Acceleration);
+        }
 
         yield return null;
     }
