@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class SfxManager : MonoBehaviour
@@ -125,13 +126,15 @@ public class SfxManager : MonoBehaviour
         sfxInstance = this;
         DontDestroyOnLoad(this);
 
-        if((float)Screen.width / (float)Screen.height < 1.45f ) {
-            volumeSliderValue = squareVolumeSlider.value;
-            //volumeSliderValue = volumeSlider.value;
-        }else{
-            volumeSliderValue = volumeSlider.value;
-            //volumeSliderValue = squareVolumeSlider.value;
-        }
+
+        volumeSliderValue = (float) PlayerPrefs.GetFloat("Volume", 0.5f);
+        // if((float)Screen.width / (float)Screen.height < 1.45f ) {
+        //     volumeSliderValue = squareVolumeSlider.value;
+        // }else{
+        //     // volumeSliderValue = volumeSlider.value;
+        //     volumeSlider = GameObject.FindGameObjectWithTag("VolumeSlider").transform.GetComponent<Slider>();
+        // }
+        
         AudioMenu = gameObject.AddComponent<AudioSource>();
         AudioMenu.clip = MenuAudioMusic;
         AudioMenu.loop = true;

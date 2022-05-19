@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
     {
       Debug.Log(SceneManager.GetActiveScene().buildIndex);
       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);  
-        sfxManager.SwitchScene();
+      sfxManager.SwitchScene();
     }
 
     public void ActivateSettingsMenu()
@@ -64,14 +64,17 @@ public class MainMenu : MonoBehaviour
 
     public void ChangeVolume()
     {
-       sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
+      
+      sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
       // Debug.Log(sfxManager);
       if((float)Screen.width / (float)Screen.height < 1.45f ) {
-        Debug.Log("volumeSliderSquare" + volumeSliderSquare.value);
+        // Debug.Log("volumeSliderSquare" + volumeSliderSquare.value);
         sfxManager.ChangeVolume((float)volumeSliderSquare.value);
+        PlayerPrefs.SetFloat("Volume", (float)volumeSliderSquare.value);
       } else {
-        Debug.Log("volumeSlider" + volumeSlider.value);
+        // Debug.Log("volumeSlider" + volumeSlider.value);
         sfxManager.ChangeVolume((float)volumeSlider.value);
+        PlayerPrefs.SetFloat("Volume", (float)volumeSlider.value);
       }
         
     }
@@ -97,7 +100,16 @@ public class MainMenu : MonoBehaviour
 
       sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
       if (sfxManager != null) hasSfxManager = true;
-
+      
+      Debug.Log("PlayerPrefs Volume : " + PlayerPrefs.GetFloat("Volume", 0.47f));
+      if((float)Screen.width / (float)Screen.height < 1.45f ) {       
+        volumeSliderSquare.value = PlayerPrefs.GetFloat("Volume", 0.47f);
+      } else {
+        volumeSlider.value = PlayerPrefs.GetFloat("Volume", 0.47f);
+      }
+      ChangeVolume();
+     
+        
       // Debug.Log(sfxManager);
 
     }
