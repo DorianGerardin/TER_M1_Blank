@@ -79,6 +79,15 @@ public class SfxManager : MonoBehaviour
         PlayClipRandomPitch(YellAudio, 0.5f, 1.5f );
     }
 
+    public void SwitchToPlayScene(){
+        isPlayingGame = false;
+        SwitchScene();   
+    }
+    public void SwitchToPlayScene(float timeToFade ){
+        isPlayingGame = false;
+        SwitchScene(timeToFade);   
+    }
+
     public void SwitchScene(){
         float timeToFade = 3.25f;
         SwitchScene(timeToFade);    

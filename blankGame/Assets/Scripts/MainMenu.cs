@@ -26,7 +26,7 @@ public class MainMenu : MonoBehaviour
     {
       Debug.Log(SceneManager.GetActiveScene().buildIndex);
       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);  
-      sfxManager.SwitchScene();
+      sfxManager.SwitchToPlayScene();
     }
 
     public void ActivateSettingsMenu()
