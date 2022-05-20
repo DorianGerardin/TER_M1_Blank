@@ -716,6 +716,7 @@ GameObject:
   - component: {fileID: 3536058810519431607}
   - component: {fileID: 3536058810519431604}
   - component: {fileID: 3536058810519431605}
+  - component: {fileID: 5399076095407776004}
   m_Layer: 6
   m_Name: mainCharacter
   m_TagString: Player
@@ -951,8 +952,28 @@ MonoBehaviour:
   hitEnemy: 0
   stuned: 0
   mainCam: {fileID: 2518856309772516610, guid: ba3122e044728c643b459a3023362ad1, type: 3}
+  timeManager: {fileID: 0}
   particleSystem: {fileID: 0}
   takeDamageParticleSystem: {fileID: 0}
+  damageEffectImage: {fileID: 0}
+--- !u!114 &5399076095407776004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3536058810519431602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &3536058810573227645
 GameObject:
   m_ObjectHideFlags: 0
