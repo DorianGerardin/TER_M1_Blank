@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class MainCharacter : MonoBehaviour
 {
@@ -47,6 +48,9 @@ public class MainCharacter : MonoBehaviour
 
     public ParticleSystem particleSystem;
     public ParticleSystem takeDamageParticleSystem;
+
+    public Image damageEffectImage;
+    bool dammageEffecttimeToggle = false;
 
     void Awake() {
         body = GetComponent<Rigidbody>();
@@ -241,7 +245,7 @@ public class MainCharacter : MonoBehaviour
         takeDamageParticleSystem.transform.position=particleSystemPosition;
         var em = takeDamageParticleSystem.emission; 
         em.enabled = true;
-        
+        StartCoroutine(PlayDamageEffectImage(0.5f));
         takeDamageParticleSystem.Play();
         sfxManager.Yell();
     }
@@ -278,16 +282,25 @@ public class MainCharacter : MonoBehaviour
         }
     }
 
-    private void playParticleSystem(ParticleSystem ps, Vector3 position){
-        // var particleSystemPosition = particleSystem.transform.position;
-        // particleSystemPosition = hitCollider.transform.position;
-        // particleSystemPosition.x += direction.x == 1 ? 6f : -6f ;
-        // particleSystemPosition.y = currentCollider.transform.position.y;
-        var psPosition = ps.transform.position;
-        psPosition = position;
-        var em = particleSystem.emission; 
-        em.enabled = true;
-        
-        particleSystem.Play();
+    IEnumerator PlayDamageEffectImage(float timeToFade)
+    {
+        float timeElapsed = 0;
+        float a;
+        Debug.Log("PlayDamageEffectImage Coroutine");
+        damageEffectImage.color = new Color(1f, 0f, 0f, 0.4f);
+        Debug.Log("AVANT color.a:" + damageEffectImage.color.a);
+        while (timeElapsed < timeToFade){
+
+            a = Mathf.Lerp(0.4f, 0f ,  timeElapsed / timeToFade);
+            // Debug.Log("PlayDamageEffectImage Coroutine a      :" + a);
+            // Debug.Log("PlayDamageEffectImage Coroutine color.a:" + damageEffectImage.color.a);
+            damageEffectImage.color = new Color(1f, 0f, 0f, a);
+            
+            timeElapsed += Time.fixedDeltaTime;
+            
+            yield return null;
+        }
+        damageEffectImage.color = new Color(1f, 0f, 0f, 0f);
+        Debug.Log("ENDED PlayDamageEffectImage Coroutine color.a:" + damageEffectImage.color.a);
     }
 }
