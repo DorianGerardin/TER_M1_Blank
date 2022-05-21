@@ -172,8 +172,8 @@ public class MainCharacter : MonoBehaviour
                         particleSystemPosition.x += direction.x == 1 ? 6f : -6f ;
                         particleSystemPosition.y = currentCollider.transform.position.y;
                         particleSystem.transform.position=particleSystemPosition;
-                        Debug.Log("hitCollider.transform.position ->" + hitCollider.transform.position);
-                        Debug.Log("particleSystemPosition         ->" + particleSystemPosition);
+                        // Debug.Log("hitCollider.transform.position ->" + hitCollider.transform.position);
+                        // Debug.Log("particleSystemPosition         ->" + particleSystemPosition);
                         var em = particleSystem.emission; 
                         //var duration = particleSystem.duration;
                         em.enabled = true;
@@ -189,7 +189,7 @@ public class MainCharacter : MonoBehaviour
     public void StartPunch(InputAction.CallbackContext context)
     {
         if(!isPunching && context.started && !stuned) {
-            Debug.Log("context duration : " + context.duration);
+            // Debug.Log("context duration : " + context.duration);
             Vector2 inputVector = context.ReadValue<Vector2>();
             inputVector = Vector3.ClampMagnitude(inputVector, 1);
             direction = new Vector3(inputVector.x, inputVector.y, 0);
@@ -286,9 +286,9 @@ public class MainCharacter : MonoBehaviour
     {
         float timeElapsed = 0;
         float a;
-        Debug.Log("PlayDamageEffectImage Coroutine");
+        // Debug.Log("PlayDamageEffectImage Coroutine");
         damageEffectImage.color = new Color(1f, 0f, 0f, 0.4f);
-        Debug.Log("AVANT color.a:" + damageEffectImage.color.a);
+        // Debug.Log("AVANT color.a:" + damageEffectImage.color.a);
         while (timeElapsed < timeToFade){
 
             a = Mathf.Lerp(0.4f, 0f ,  timeElapsed / timeToFade);
@@ -301,6 +301,6 @@ public class MainCharacter : MonoBehaviour
             yield return null;
         }
         damageEffectImage.color = new Color(1f, 0f, 0f, 0f);
-        Debug.Log("ENDED PlayDamageEffectImage Coroutine color.a:" + damageEffectImage.color.a);
+        // Debug.Log("ENDED PlayDamageEffectImage Coroutine color.a:" + damageEffectImage.color.a);
     }
 }

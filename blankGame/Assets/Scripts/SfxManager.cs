@@ -37,6 +37,7 @@ public class SfxManager : MonoBehaviour
     private AudioSource AudioGame;  
     private AudioSource AudioEffects; 
     private bool isPlayingGame;
+    public float gameSpeedMultiplier = 1f;
 
     public void ChangeVolume(float volumeSliderValue)
     {
@@ -57,12 +58,17 @@ public class SfxManager : MonoBehaviour
     }
 
     public void SpeedUpGameAudio(float deltaSpeed){
-        AudioGame.pitch += deltaSpeed; 
+        if (gameSpeedMultiplier +  deltaSpeed < 1.35f ) 
+            gameSpeedMultiplier += deltaSpeed; 
+        
+        Debug.Log("sfxManager SpeedUpGameAudio:" + AudioGame.pitch);
     }
 
-    public void freezeWithPunch(){
-
+    public void RevertGameAudio(){
+        gameSpeedMultiplier = 1; 
     }
+
+    
 
     public void PunchOnCollision()
     {
@@ -203,7 +209,7 @@ public class SfxManager : MonoBehaviour
     private void Update(){
         // Debug.Log("volumeSlider", volumeSlider);
         if (isPlayingGame){
-            AudioGame.pitch = Time.timeScale;
+            AudioGame.pitch = gameSpeedMultiplier * Time.timeScale;
         }else{
             AudioMenu.pitch = Time.timeScale;
         }

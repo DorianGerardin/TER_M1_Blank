@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
             timeManager.RevertBackTime();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             sfxManager.SwitchScene();
+            sfxManager.RevertGameAudio();
+
         }
 
         if(SceneManager.GetActiveScene().name=="Game"){   
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour
                     if(timeToWait>0.3F){
                         timeToWait/=ratioIncrement;
                     }
-                    Debug.Log("time : "+(timeToWait+timeToCompletePattern));
+                    // Debug.Log("time : "+(timeToWait+timeToCompletePattern));
                 }
             }
         }
@@ -94,6 +96,7 @@ public class GameManager : MonoBehaviour
 
     public void launchNewWave(){
         launchRandomPattern();
+        sfxManager.SpeedUpGameAudio(0.015f);
         wave++;
     }
 
