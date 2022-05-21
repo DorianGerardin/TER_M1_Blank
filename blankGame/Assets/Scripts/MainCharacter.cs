@@ -136,13 +136,12 @@ public class MainCharacter : MonoBehaviour
                     StartCoroutine("Stun");
                 }
                 currentCollider.GetComponent<Renderer>().material.SetColor("_Color", new Color32(42, 234, 247, 80));
-                currentCollider.GetComponent<Renderer>().material.shader=Shader.Find("Transparent/Diffuse");
                 hitEnemy = false;
                 isPunching = false;
             } 
             else {
                 timeManager.RevertBackTime();
-                currentCollider.GetComponent<Renderer>().material.SetColor("_Color", new Color(1.0f, 0.0f, 0.0f, 1.0f));
+                currentCollider.GetComponent<Renderer>().material.SetColor("_Color", new Color32(42, 234, 247, 255));
                 Collider[] hitColliders = Physics.OverlapSphere(currentCollider.transform.position, 0.5f);
                 foreach (var hitCollider in hitColliders) {
                     if(hitCollider.tag == "Enemy" && hitCollider.name != transform.name &&  ! hitCollider.transform.GetComponent<Ennemy>().isDead()){ 
