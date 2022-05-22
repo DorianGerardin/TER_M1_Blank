@@ -41,7 +41,6 @@ public class EnnemySpawn : MonoBehaviour
     }
 
     public void SpawnObject(){
-        //Debug.Log("je spawn");
         Instantiate(spawnee.gameObject, transform.position + Vector3.forward, spawnee.gameObject.transform.rotation);
     }
 

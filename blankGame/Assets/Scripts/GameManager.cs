@@ -73,7 +73,6 @@ public class GameManager : MonoBehaviour
                     if(timeToWait>0.3F){
                         timeToWait/=ratioIncrement;
                     }
-                    // Debug.Log("time : "+(timeToWait+timeToCompletePattern));
                 }
             }
         }
@@ -105,19 +104,15 @@ public class GameManager : MonoBehaviour
         score+=10*consequentHits*wave;
     }
 
-    public void gameOver(){
-        Debug.Log("Game Over, sadge");
-    }
-
     public void launchPattern1(){
         Debug.Log("Launching Pattern 1");
         float[] pattern1={1.0F,1.0F,1.0F};
         float[] pattern2={1.5F,1.0F,1.0F};
         for(int i=0;i<pattern1.Length;i++){
-            /*for(int w=1;w<wave;w++){
+            for(int w=1;w<wave;w++){
                 pattern1[i]/=ratioIncrement;
                 pattern2[i]/=ratioIncrement;
-            }*/
+            }
             if(pattern1[i]<=0.75F){
                 pattern1[i]=0.75F;
             }
@@ -136,10 +131,10 @@ public class GameManager : MonoBehaviour
         float[] pattern1={1.0F,2.0F,1.0F};
         float[] pattern2={2.0F,1.0F,1.5F};
         for(int i=0;i<pattern1.Length;i++){
-            /*for(int w=1;w<wave;w++){
+            for(int w=1;w<wave;w++){
                 pattern1[i]/=ratioIncrement;
                 pattern2[i]/=ratioIncrement;
-            }*/
+            }
             if(pattern1[i]<=0.75F){
                 pattern1[i]=0.75F;
             }
