@@ -105,7 +105,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void launchPattern1(){
-        Debug.Log("Launching Pattern 1");
         float[] pattern1={1.0F,1.0F,1.0F};
         float[] pattern2={1.5F,1.0F,1.0F};
         for(int i=0;i<pattern1.Length;i++){
@@ -120,14 +119,12 @@ public class GameManager : MonoBehaviour
                 pattern2[i]=0.75F;
             }
             timeToCompletePattern+=Mathf.Max(pattern1[i],pattern2[i]);
-            Debug.Log("Max : "+Mathf.Max(pattern1[i],pattern2[i]));
         }
         spawner1.startPattern(pattern1);
         spawner2.startPattern(pattern2);
     }
 
     public void launchPattern2(){
-        Debug.Log("Launching Pattern 2");
         float[] pattern1={1.0F,2.0F,1.0F};
         float[] pattern2={2.0F,1.0F,1.5F};
         for(int i=0;i<pattern1.Length;i++){
@@ -142,8 +139,6 @@ public class GameManager : MonoBehaviour
                 pattern2[i]=0.75F;
             }
             timeToCompletePattern+=Mathf.Max(pattern1[i],pattern2[i]);
-
-            Debug.Log("Max : "+Mathf.Max(pattern1[i],pattern2[i]));
         }
         spawner1.startPattern(pattern1);
         spawner2.startPattern(pattern2);

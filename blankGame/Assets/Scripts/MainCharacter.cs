@@ -43,14 +43,12 @@ public class MainCharacter : MonoBehaviour
     private SfxManager sfxManager;
     public TimeManager timeManager;
 
-
     private Vector3 defaultCamPos;
 
     public ParticleSystem particleSystem;
     public ParticleSystem takeDamageParticleSystem;
 
     public Image damageEffectImage;
-    bool dammageEffecttimeToggle = false;
 
     void Awake() {
         body = GetComponent<Rigidbody>();
@@ -100,37 +98,22 @@ public class MainCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //rightSpawner.transform.position = new Vector3(transform.position.x + distanceRspawner, rightSpawner.transform.position.y, rightSpawner.transform.position.z);
-        //leftSpawner.transform.position = new Vector3(transform.position.x - distanceLspawner, leftSpawner.transform.position.y, leftSpawner.transform.position.z);
-
-        //Debug.Log("stuned : " + stuned);
 
         mainCam.transform.position = new Vector3(transform.position.x, defaultCamPos.y, defaultCamPos.z);
         
         Vector3 distanceCam = (transform.position - defaultCamPos).normalized;
 
         if(isPunching) {
-            // animator.applyRootMotion = false;
             currentCollider = direction.x == 1 ? rightCollider : leftCollider;
 
-            
-
             if(Time.time >= punchStartTime + punchDuration || hitEnemy){
-                //Debug.Log("hit ennemy : " + hitEnemy);
-
-                // if(!hitEnemy) {
-                //     StartCoroutine("Stun");
-                // }
 
                 if (direction.x == 1) animator.SetBool("PunchRight", false);
                 else animator.SetBool("PunchLeft", false);
-                // animator.SetBool("KickRight", false);
-                // animator.SetBool("KickLeft", false);
                 body.velocity = Vector3.zero;
             }
 
             if(Time.time >= punchStartTime + punchDuration + 0.15f || hitEnemy){
-                //Debug.Log("hit ennemy : " + hitEnemy);
 
                 if(!hitEnemy) {
                     StartCoroutine("Stun");
@@ -146,49 +129,34 @@ public class MainCharacter : MonoBehaviour
                 foreach (var hitCollider in hitColliders) {
                     if(hitCollider.tag == "Enemy" && hitCollider.name != transform.name &&  ! hitCollider.transform.GetComponent<Ennemy>().isDead()){ 
 
-                        // animator.applyRootMotion = true;
-                        // Vector3  pos = this.transform.position ;
-                        // pos += animator.deltaPosition;
-                        // this.transform.position = pos;
-                        // this.transform.rotation = animator.deltaRotation * transform.rotation;
-
                         body.velocity = Vector3.zero;
                         body.angularVelocity = Vector3.zero;
 
                         Debug.Log("hit ennemy : " + hitEnemy);
-                        //Debug.Log("je touche");
                         hitEnemy = true;
-                        //mainCam.fieldOfView = (90 / 2);
                         sfxManager.PunchOnCollision();
-                        // Ennemy ennemy  = hitCollider.transform.GetComponent<Ennemy>();
-                        // if (!ennemy.dead)
                         hitCollider.transform.GetComponent<Ennemy>().takeDamage();
                         
-                        timeManager.SlowDownTimeInstantly(0.5F, 0.2F);
+                        timeManager.SlowDownTimeInstantly(0.2F, 0.04F);
 
                         var particleSystemPosition = particleSystem.transform.position;
                         particleSystemPosition = hitCollider.transform.position;
                         particleSystemPosition.x += direction.x == 1 ? 6f : -6f ;
                         particleSystemPosition.y = currentCollider.transform.position.y;
                         particleSystem.transform.position=particleSystemPosition;
-                        // Debug.Log("hitCollider.transform.position ->" + hitCollider.transform.position);
-                        // Debug.Log("particleSystemPosition         ->" + particleSystemPosition);
                         var em = particleSystem.emission; 
-                        //var duration = particleSystem.duration;
                         em.enabled = true;
-                        
                         particleSystem.Play();
 
                     }
                 }
             }
-        } //else mainCam.transform.position = new Vector3(transform.position.x, defaultCamPos.y, defaultCamPos.z);
+        }
     }
 
     public void StartPunch(InputAction.CallbackContext context)
     {
         if(!isPunching && context.started && !stuned) {
-            // Debug.Log("context duration : " + context.duration);
             Vector2 inputVector = context.ReadValue<Vector2>();
             inputVector = Vector3.ClampMagnitude(inputVector, 1);
             direction = new Vector3(inputVector.x, inputVector.y, 0);
@@ -285,14 +253,10 @@ public class MainCharacter : MonoBehaviour
     {
         float timeElapsed = 0;
         float a;
-        // Debug.Log("PlayDamageEffectImage Coroutine");
         damageEffectImage.color = new Color(1f, 0f, 0f, 0.4f);
-        // Debug.Log("AVANT color.a:" + damageEffectImage.color.a);
         while (timeElapsed < timeToFade){
 
             a = Mathf.Lerp(0.4f, 0f ,  timeElapsed / timeToFade);
-            // Debug.Log("PlayDamageEffectImage Coroutine a      :" + a);
-            // Debug.Log("PlayDamageEffectImage Coroutine color.a:" + damageEffectImage.color.a);
             damageEffectImage.color = new Color(1f, 0f, 0f, a);
             
             timeElapsed += Time.fixedDeltaTime;
@@ -300,6 +264,5 @@ public class MainCharacter : MonoBehaviour
             yield return null;
         }
         damageEffectImage.color = new Color(1f, 0f, 0f, 0f);
-        // Debug.Log("ENDED PlayDamageEffectImage Coroutine color.a:" + damageEffectImage.color.a);
     }
 }

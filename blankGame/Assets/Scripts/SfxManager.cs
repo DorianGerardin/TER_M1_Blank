@@ -60,8 +60,6 @@ public class SfxManager : MonoBehaviour
     public void SpeedUpGameAudio(float deltaSpeed){
         if (gameSpeedMultiplier +  deltaSpeed < 1.35f ) 
             gameSpeedMultiplier += deltaSpeed; 
-        
-        Debug.Log("sfxManager SpeedUpGameAudio:" + AudioGame.pitch);
     }
 
     public void RevertGameAudio(){
@@ -143,12 +141,6 @@ public class SfxManager : MonoBehaviour
 
 
         volumeSliderValue = (float) PlayerPrefs.GetFloat("Volume", 0.5f);
-        // if((float)Screen.width / (float)Screen.height < 1.45f ) {
-        //     volumeSliderValue = squareVolumeSlider.value;
-        // }else{
-        //     // volumeSliderValue = volumeSlider.value;
-        //     volumeSlider = GameObject.FindGameObjectWithTag("VolumeSlider").transform.GetComponent<Slider>();
-        // }
         
         AudioMenu = gameObject.AddComponent<AudioSource>();
         AudioMenu.clip = MenuAudioMusic;
@@ -177,8 +169,6 @@ public class SfxManager : MonoBehaviour
 
     private void PlayClipRandomPitch(AudioClip clip, float min = (float) 0.7, float max = (float) 2.0){
         AudioEffects.pitch = Random.Range(min, max);
-        // float oldVOlume = AudioEffects.volume;
-        // AudioEffects.volume = oldVOlume * volumeSliderValue;
         AudioEffects.PlayOneShot(clip);
     }
 
@@ -207,7 +197,6 @@ public class SfxManager : MonoBehaviour
     }
 
     private void Update(){
-        // Debug.Log("volumeSlider", volumeSlider);
         if (isPlayingGame){
             AudioGame.pitch = gameSpeedMultiplier * Time.timeScale;
         }else{

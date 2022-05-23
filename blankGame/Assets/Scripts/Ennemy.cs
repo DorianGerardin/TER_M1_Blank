@@ -23,7 +23,6 @@ public class Ennemy : MonoBehaviour
     void Awake() {
         animator = GetComponent<Animator>();
         body = GetComponent<Rigidbody>();
-        // timeManager = GetComponent<TimeManager>();
     }
 
     // Start is called before the first frame update
@@ -57,18 +56,10 @@ public class Ennemy : MonoBehaviour
         if (!dead){
             if((Mathf.Abs(body.position.x - target.getBody().position.x) <= hitOffset) && !target.isPunching && !attacking) {
                 attacking = true;
-                //updateMainCharacterKinematic();
-                //target.getBody().isKinematic = true;
                 animator.SetBool(punchAnimation, true);
-                Debug.Log("enemy attack");
                 body.velocity = Vector3.zero;
-                // target.Invoke("takeDamage", 0.6f);
                 Invoke("takeDamageOnPlayer", 0.6f);
-                // Destroy(this.gameObject, 0.7f);
                 Destroy(this.gameObject, 1.5f);
-                //Invoke("updateMainCharacterKinematic", 0.7f);
-                //StartCoroutine("OnAnimationComplete", punchAnimation);
-                //target.getBody().isKinematic = false;
             } else if(attacking) body.velocity = Vector3.zero;
             else body.velocity = (Quaternion.Euler(0,transform.eulerAngles.y,0) * (Vector3.forward) * speed);
         }
@@ -99,28 +90,20 @@ public class Ennemy : MonoBehaviour
     public void takeDamage() {
         if (!dead){
             this.dead = true;
-
             float randomOffset = Random.Range(-0.2f, 0.2f);
-            // Debug.Log("random : " + randomOffset);
             Vector3 newExpulseDirection = new Vector3(expulseDirection.x, expulseDirection.y + randomOffset, expulseDirection.z);
             body.AddForce(newExpulseDirection * 300, ForceMode.Impulse); 
-
         }
-        // Destroy(this.gameObject);
     }
 
     IEnumerator OnAnimationComplete(string name)
     {
-        Debug.Log("nom animation :" + name);
-
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         {
             //wait
             Debug.Log("l'animation pas terminée");
             yield return null;
         }
-
-        Debug.Log("je destroy");
         Destroy(this.gameObject, 0.6f);
 
         yield return null;
@@ -129,14 +112,6 @@ public class Ennemy : MonoBehaviour
     private void takeDamageOnPlayer(){
         if (!dead) target.takeDamage();
     }
-
-    // void OnCollisionEnter(Collision col){
-    //     if(col.gameObject.name == "mainCharacter"){
-    //         //col.rigidbody.isKinematic = true;
-    //         //Destroy(this.gameObject);
-    //         //col.rigidbody.isKinematic = false;
-    //     }
-    // }
 
     public bool isDead(){
         return dead;

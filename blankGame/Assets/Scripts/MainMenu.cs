@@ -66,13 +66,10 @@ public class MainMenu : MonoBehaviour
     {
       
       sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
-      // Debug.Log(sfxManager);
       if((float)Screen.width / (float)Screen.height < 1.45f ) {
-        // Debug.Log("volumeSliderSquare" + volumeSliderSquare.value);
         sfxManager.ChangeVolume((float)volumeSliderSquare.value);
         PlayerPrefs.SetFloat("Volume", (float)volumeSliderSquare.value);
       } else {
-        // Debug.Log("volumeSlider" + volumeSlider.value);
         sfxManager.ChangeVolume((float)volumeSlider.value);
         PlayerPrefs.SetFloat("Volume", (float)volumeSlider.value);
       }
@@ -101,21 +98,15 @@ public class MainMenu : MonoBehaviour
       sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
       if (sfxManager != null) hasSfxManager = true;
       
-      Debug.Log("PlayerPrefs Volume : " + PlayerPrefs.GetFloat("Volume", 0.47f));
       if((float)Screen.width / (float)Screen.height < 1.45f ) {       
         volumeSliderSquare.value = PlayerPrefs.GetFloat("Volume", 0.47f);
       } else {
         volumeSlider.value = PlayerPrefs.GetFloat("Volume", 0.47f);
       }
       ChangeVolume();
-     
-        
-      // Debug.Log(sfxManager);
-
     }
 
     public void PlayClick(){
-      //  Debug.Log(sfxManager);
       sfxManager = GameObject.FindGameObjectWithTag("sfxManager").transform.GetComponent<SfxManager>();
       sfxManager.PlayClick();
     }
@@ -123,21 +114,10 @@ public class MainMenu : MonoBehaviour
     public void Update(){
       if (sfxManager != null) hasSfxManager = true;
       else hasSfxManager = false;
-      // Debug.Log("sfx" + hasSfxManager);
-      // Debug.Log("width : " + Screen.width);
-      // Debug.Log("height : " + Screen.height);
-
-      // Debug.Log("ratio : " + ((float)Screen.width / (float)Screen.height));
-
       if((float)Screen.width / (float)Screen.height < 1.45f ) {
         image.sprite = squarredSprite;
-        // mainMenu.SetActive(false);
-        // mainMenuSquare.SetActive(true);
-
       } else {
         image.sprite = largeSprite;
-        // mainMenu.SetActive(true);
-        // mainMenuSquare.SetActive(false);
       }
     }
 }
